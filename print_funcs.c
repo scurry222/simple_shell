@@ -12,6 +12,9 @@ int _putchar(char c)
 	return (write(1, &c, 1));
 }
 
+/**
+ * print_prompt - prints a prompt for the shell
+ */
 void print_prompt(void)
 {
 	char *s = "(s) ";
@@ -23,6 +26,9 @@ void print_prompt(void)
 	}
 }
 
+/**
+ * print_env - replicates the bash env function
+ */
 void print_env(void)
 {
 	int i, j;

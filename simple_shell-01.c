@@ -2,7 +2,8 @@
 
 /**
  * main - simple command-line argument interpreter
- *
+ * Description: prints a prompt and waits for the user to input a command,
+ * then creates a child process in which it exececutes the command
  * Return: Always 0.
  */
 int main(void)
