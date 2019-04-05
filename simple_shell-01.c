@@ -1,9 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include "shell.h"
 
 /**
@@ -21,15 +15,20 @@ int main(void)
 
 	while (1)
 	{
-		printf("($) ");
+		print_prompt();
 		get = getline(&ch, &len, stdin);
 		if (get < 0)
 		{
-			printf("\n");
+			_putchar('\n');
 			return (0);
 		}
-		if (strcmp(ch, "exit\n") == 0)
+		if (_strcmp(ch, "exit\n") == 0)
 			exit(EXIT_SUCCESS);
+		if (_strcmp(ch, "env\n") == 0)
+		{
+			print_env();
+			continue;
+		}
 		strtok(ch, "\n");
 		child_pid = fork();
 		if (child_pid == -1)
