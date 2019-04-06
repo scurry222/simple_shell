@@ -56,11 +56,13 @@ int main(void)
 
 	while (1)
 	{
-		print_prompt();
+		if (isatty(STDIN_FILENO) != 0)
+			print_prompt();
 		get = getline(&ch, &len, stdin);
 		if (get < 0)
 		{
-			_putchar('\n');
+			if (isatty(STDIN_FILENO) != 0)
+				_putchar('\n');
 			return (0);
 		}
 		if (_strcmp(ch, "exit\n") == 0)
