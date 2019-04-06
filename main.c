@@ -20,6 +20,7 @@ void exec(char *ch)
                 	if (execve(argv[0], argv, environ) < 0)
                 	{
                         	perror("./shell");
+				free_everything(argv);
                         	exit(1);
                 	}
         	}
@@ -29,17 +30,22 @@ void exec(char *ch)
 			if (!exe)
 			{
 				perror("./shell");
+				free_everything(argv);
 				exit(1);
 			}
                 	if (execve(exe, argv, environ) < 0)
                 	{
                         	perror("./shell");
+				free_everything(argv);
                         	exit(1);
                 	}
         	}	
 	}	
 	else
 		wait(NULL);
+	free(exe);
+	free(ch);
+	free_everything(argv);
 }
 
 /**
@@ -78,6 +84,6 @@ int main(void)
 		exec(ch);
 		continue;
 	}
+	free(ch);
 	return (0);
 }
-
