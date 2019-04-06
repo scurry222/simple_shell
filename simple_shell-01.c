@@ -1,5 +1,28 @@
 #include "shell.h"
 
+void exec(char *ch, char **argv)
+{
+	char *exe;
+
+	if (access(ch, X_OK) == 0)
+	{
+		if (execve(ch, argv, NULL) < 0)
+		{
+			perror("./shell");
+			return;
+		}
+	}
+	else
+	{
+		exe = path_finder(ch);
+		if (execve(exe, argv, NULL) < 0)
+		{
+			perror("./shell");
+			return;
+		}
+	}
+}
+
 /**
  * main - simple command-line argument interpreter
  * Description: prints a prompt and waits for the user to input a command,
@@ -12,7 +35,6 @@ int main(void)
 	size_t len = 0;
 	int get;
 	char *ch;
-	char *exe;
 	char *argv[] = {"/bin", NULL};
 
 	while (1)
@@ -39,25 +61,7 @@ int main(void)
 			continue;
 		}
 		if (child_pid == 0)
-		{
-			if (access(ch, X_OK) == 0)
-			{
-				if (execve(ch, argv, NULL) < 0)
-				{
-					perror("./shell");
-					return (1);
-				}
-			}
-			else
-			{
-				exe = path_finder(ch);
-				if (execve(exe, argv, NULL) < 0)
-				{
-					perror("./shell");
-					return (1);
-				}
-			}
-		}
+			exec(ch, argv);
 		else
 		{
 			wait(NULL);
@@ -67,3 +71,4 @@ int main(void)
 	free(ch);
 	return (0);
 }
+
