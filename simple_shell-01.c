@@ -12,6 +12,7 @@ int main(void)
 	size_t len = 0;
 	int get;
 	char *ch;
+	char *exe;
 	char *argv[] = {"/bin", NULL};
 
 	while (1)
@@ -39,10 +40,22 @@ int main(void)
 		}
 		if (child_pid == 0)
 		{
-			if (execve(ch, argv, NULL) < 0)
+			if (access(ch, X_OK) == 0)
 			{
-				perror("./shell");
-				return (0);
+				if (execve(ch, argv, NULL) < 0)
+				{
+					perror("./shell");
+					return (1);
+				}
+			}
+			else
+			{
+				exe = path_finder(ch);
+				if (execve(exe, argv, NULL) < 0)
+				{
+					perror("./shell");
+					return (1);
+				}
 			}
 		}
 		else
