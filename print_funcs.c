@@ -17,7 +17,7 @@ int _putchar(char c)
  */
 void print_prompt(void)
 {
-	char *s = "(s) ";
+	char *s = "($) ";
 
 	while (*s)
 	{

@@ -1,80 +1,4 @@
-#include <stdlib.h>
 #include "shell.h"
-
-/**
- * count_word - helper function to count the number of words in a string
- * @s: string to evaluate
- *
- * Return: number of words
- */
-int count_word(char *s)
-{
-	int flag, c, w;
-
-	flag = 0;
-	w = 0;
-
-	for (c = 0; s[c] != '\0'; c++)
-	{
-		if (s[c] == ' ')
-			flag = 0;
-		else if (flag == 0)
-		{
-			flag = 1;
-			w++;
-		}
-	}
-
-	return (w);
-}
-/**
- * **strtow - splits a string into words
- * @str: string to split
- *
- * Return: pointer to an array of strings (Success)
- * or NULL (Error)
- */
-char **strtow(char *str)
-{
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
-
-	while (*(str + len))
-		len++;
-	words = count_word(str);
-	if (words == 0)
-		return (NULL);
-
-	matrix = (char **) malloc(sizeof(char *) * (words + 1));
-	if (matrix == NULL)
-		return (NULL);
-
-	for (i = 0; i <= len; i++)
-	{
-		if (str[i] == ' ' || str[i] == '\0')
-		{
-			if (c)
-			{
-				end = i;
-				tmp = (char *) malloc(sizeof(char) * (c + 1));
-				if (tmp == NULL)
-					return (NULL);
-				while (start < end)
-					*tmp++ = str[start++];
-				*tmp = '\0';
-				matrix[k] = tmp - c;
-				k++;
-				c = 0;
-			}
-		}
-		else if (c++ == 0)
-			start = i;
-	}
-
-	matrix[k] = NULL;
-
-	return (matrix);
-}
 
 /**
  * _strcmp - compares two strings
@@ -96,4 +20,97 @@ int _strcmp(char *s1, char *s2)
 		s2++;
 	}
 	return (*s1 - *s2);
+}
+
+/**
+ * _strlen - returns the length of a string
+ * @s: string to evaluate
+ *
+ * Return: the length of the string
+ */
+int _strlen(char *s)
+{
+        unsigned int len = 0;
+
+        while (s[len])
+                len++;
+
+        return (len);
+}
+
+/**
+ * *str_concat - concatenates two strings
+ * @s1: string to concatenate
+ * @s2: other string to concatenate
+ *
+ * Return: pointer to the new string created (Success), or NULL (Error)
+ */
+char *str_concat(char *s1, char *s2)
+{
+	char *s3;
+	unsigned int i = 0, j = 0, len1 = 0, len2 = 0;
+
+	while (s1 && s1[len1])
+		len1++;
+	while (s2 && s2[len2])
+		len2++;
+
+	s3 = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (s3 == NULL)
+		return (NULL);
+
+	i = 0;
+	j = 0;
+
+	if (s1)
+	{
+		while (i < len1)
+		{
+			s3[i] = s1[i];
+			i++;
+		}
+	}
+
+	if (s2)
+	{
+		while (i < (len1 + len2))
+		{
+			s3[i] = s2[j];
+			i++;
+			j++;
+		}
+	}
+	s3[i] = '\0';
+
+	return (s3);
+}
+
+/**
+ * *_strdup - copies the string given as parameter
+ * @str: string to duplicate
+ *
+ * Return: pointer to the copied string (Success), NULL (Error)
+ */
+char *_strdup(char *str)
+{
+	char *dup;
+	int c, i = 0;
+
+	if (!str)
+		return (NULL);
+
+	while (str[i])
+		i++;
+
+	dup = malloc(sizeof(char) * i + 1);
+
+	if (!dup)
+		return (NULL);
+
+	for (c = 0; c < i; c++)
+		dup[c] = str[c];
+
+	dup[c] = '\0';
+
+	return (dup);
 }

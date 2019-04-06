@@ -12,18 +12,28 @@
 
 extern char **environ;
 
+/* main.c */
+void exec(char *ch);
+
+/* print_funcs.c */
 int _putchar(char c);
-char **strtow(char *str);
-int count_word(char *s);
 void print_env(void);
 void print_prompt(void);
+
+/* string_funcs.c */
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
+int _strlen(char *s);
+char *str_concat(char *s1, char *s2);
+
+/* parse_path.c */
 int strtok_count(char *value);
 char *get_env(char *name);
-int _strlen(char *s);
 char **parse_path(char *value);
-char *str_concat(char *s1, char *s2);
-char *path_finder(char *s);
+char *path_finder(char **s);
+
+/* strtow.c */
+char **strtow(char *str);
+int count_word(char *s);
 
 #endif

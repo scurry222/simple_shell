@@ -1,59 +1,39 @@
 #include "shell.h"
 
-int _strlen(char *s)
+int strtok_count(char *value)
 {
-        unsigned int len = 0;
+	char *valcopy = NULL;
+	char *token;
+	int count = 0, i;
 
-        while (s[len])
-                len++;
+	valcopy = _strdup(value);
 
-        return (len);
+	token = strtok(valcopy, ":");
+		count++;
+
+	for (i = 0; (token = strtok(NULL, ":")); i++)
+		count++;
+
+	return (count);
 }
-/**
- * *str_concat - concatenates two strings
- * @s1: string to concatenate
- * @s2: other string to concatenate
- *
- * Return: pointer to the new string created (Success), or NULL (Error)
- */
-char *str_concat(char *s1, char *s2)
+
+char *get_env(char *name)
 {
-	char *s3;
-	unsigned int i = 0, j = 0, len1 = 0, len2 = 0;
+	char **env, *value = NULL, *pathname = NULL;
+	int i;
 
-	while (s1 && s1[len1])
-		len1++;
-	while (s2 && s2[len2])
-		len2++;
+	env = environ;
 
-	s3 = malloc(sizeof(char) * (len1 + len2 + 1));
-	if (s3 == NULL)
-		return (NULL);
-
-	i = 0;
-	j = 0;
-
-	if (s1)
+	for (i = 0; env[i]; i++)
 	{
-		while (i < len1)
+		pathname = strtok(env[i], "=");
+		if (_strcmp(name, pathname) == 0)
 		{
-			s3[i] = s1[i];
-			i++;
+			value = strtok(NULL, env[i]);
+			break;
 		}
 	}
-
-	if (s2)
-	{
-		while (i < (len1 + len2))
-		{
-			s3[i] = s2[j];
-			i++;
-			j++;
-		}
-	}
-	s3[i] = '\0';
-
-	return (s3);
+	return (value);
 }
 
 char **parse_path(char *value)
@@ -86,7 +66,7 @@ char **parse_path(char *value)
 	return (arr);
 }
 
-char *path_finder(char *s)
+char *path_finder(char **s)
 {
 	int i;
 	char *path;
@@ -101,7 +81,7 @@ char *path_finder(char *s)
 	for (i = 0; path_arr[i]; i++)
 	{
 		dir = str_concat(path_arr[i], "/");
-		prog = str_concat(dir, s);
+		prog = str_concat(dir, s[0]);
 		free(dir);
 		if (access(prog, X_OK) == 0)
 			return (prog);
