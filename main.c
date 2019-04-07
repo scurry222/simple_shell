@@ -21,20 +21,20 @@ void exec(char *ch)
                 {
 			if (stat(argv[0], &filestat) == 0)
 			{
-                       	 	if (execve(argv[0], argv, environ) < 0)
+                       		if (execve(argv[0], argv, environ) < 0)
 				{
                                 	perror("./shell");
 					//free_everything(argv);
                                 	exit(1);
 				}
-                        }
+			}
                 }
                 if (execve(exe, argv, environ) < 0)
                 {
-                        perror("./shell");
+                       	perror("./shell");
 		//	free_everything(argv);
                         exit(1);
-                }	
+                }
 	}	
 	else
 		wait(NULL);
