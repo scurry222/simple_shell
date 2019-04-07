@@ -43,6 +43,9 @@ char **parse_path(char *value)
 	int i;
 	int count = 0;
 
+	if (value[0] != '/' || !value)
+		return (NULL);
+
 	count = strtok_count(value);
 	arr = malloc(sizeof(char *) * (count + 1));
 	if (!arr)
@@ -77,6 +80,8 @@ char *path_finder(char **s)
 	path = get_env("PATH");
 
 	path_arr = parse_path(path);
+	if (!path_arr)
+		return (NULL);
 
 	for (i = 0; path_arr[i]; i++)
 	{
