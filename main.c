@@ -15,34 +15,31 @@ void exec(char *ch)
 	if (child_pid == 0)
 	{
 		argv = strtow(ch);
-		if (access(argv[0], X_OK) == 0)
-        	{
-                	if (execve(argv[0], argv, environ) < 0)
-                	{
-                        	perror("./shell");
-				free_everything(argv);
-                        	exit(1);
-                	}
-        	}
-        	else
-        	{
-                	exe = path_finder(argv);
-			if (!exe)
-			{
-				perror("./shell");
-				free_everything(argv);
-				exit(1);
-			}
-                	if (execve(exe, argv, environ) < 0)
-                	{
-                        	perror("./shell");
-				free_everything(argv);
-                        	exit(1);
-                	}
-        	}	
+                exe = path_finder(argv);
+                if (!exe)
+                {
+                        if (execve(argv[0], argv, environ) < 0)
+                        {
+                                perror("./shell");
+			//	free_everything(argv);
+                                exit(1);
+                        }
+                }
+                if (execve(exe, argv, environ) < 0)
+                {
+                        perror("./shell");
+		//	free_everything(argv);
+                        exit(1);
+                }	
 	}	
 	else
 		wait(NULL);
+<<<<<<< HEAD
+=======
+	//free(exe);
+	//free(ch);
+	//free_everything(argv);
+>>>>>>> laura
 }
 
 /**
