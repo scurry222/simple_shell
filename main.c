@@ -34,12 +34,9 @@ void exec(char *ch)
 	}	
 	else
 		wait(NULL);
-<<<<<<< HEAD
-=======
 	//free(exe);
 	//free(ch);
 	//free_everything(argv);
->>>>>>> laura
 }
 
 /**
