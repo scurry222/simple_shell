@@ -27,17 +27,25 @@ What we learnt:
 * Works also in non interactive mode
 
 ## Examples
-* ```($) /bin/ls
-foo main.c README.md tests```
-* ```($) pwd
-/home/vagrant/simple_shell```
-* ```($) ls -l
+```bash
+($) /bin/ls
+foo main.c README.md tests
+```
+```bash
+($) pwd 
+/home/vagrant/simple_shell
+```
+```bash
+($) ls -l
 total 60
 drwxrwxr-x 7 vagrant vagrant  4096 Apr  7 01:48 0x15
 -rw-rw-r-- 1 vagrant vagrant   148 Apr  7 00:00 free.c
--rwxrw-r-- 1 vagrant vagrant    28 Apr  7 15:35 ls.sh```
-* ```($) potato
-./shell: No such file or directory```
+-rwxrw-r-- 1 vagrant vagrant    28 Apr  7 15:35 ls.sh
+```
+```bash
+($) potato
+./shell: No such file or directory
+```
 
 ## Authors
 
