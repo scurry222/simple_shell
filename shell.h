@@ -36,4 +36,7 @@ char *path_finder(char **s);
 char **strtow(char *str);
 int count_word(char *s);
 
+/* free.c */
+void free_everything(char **args);
+
 #endif
