@@ -43,9 +43,6 @@ void exec(char *ch)
 	}	
 	else
 		wait(NULL);
-	free(exe);
-	free(ch);
-	free_everything(argv);
 }
 
 /**
