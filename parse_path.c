@@ -1,5 +1,12 @@
 #include "shell.h"
 
+/**
+* strtok_count - count the amount of tokens returned from strtok
+* @value: original string (value of PATH)
+
+* Return: count of tokens
+*/
+
 int strtok_count(char *value)
 {
 	char *valcopy = NULL;
@@ -16,6 +23,13 @@ int strtok_count(char *value)
 
 	return (count);
 }
+
+/**
+* get_env - access environment to get value at passed in name
+* @name: key (key=value) to select in env
+*
+* Return: value at key
+*/
 
 char *get_env(char *name)
 {
@@ -35,6 +49,13 @@ char *get_env(char *name)
 	}
 	return (value);
 }
+
+/**
+* parse_path - turn PATH string into array of strings (one dir per string)
+* @value: string containing all dirs in path
+*
+* Return: array of strings
+*/
 
 char **parse_path(char *value)
 {
@@ -68,6 +89,13 @@ char **parse_path(char *value)
 	arr[i] = NULL;
 	return (arr);
 }
+
+/**
+* path_finder - connect dirs in PATH with inputted command, check if executable
+* @s: input, in form array of strings
+*
+* Return: concat'ed string 
+*/
 
 char *path_finder(char **s)
 {
