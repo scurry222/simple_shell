@@ -44,10 +44,10 @@ char *get_env(char *name)
 		if (_strcmp(name, pathname) == 0)
 		{
 			value = strtok(NULL, env[i]);
-			break;
+			return (value);
 		}
 	}
-	return (value);
+	return (NULL);
 }
 
 /**
@@ -106,7 +106,8 @@ char *path_finder(char **s)
 	char **path_arr;
 
 	path = get_env("PATH");
-
+	if (!path)
+		return (NULL);
 	path_arr = parse_path(path);
 	if (!path_arr)
 		return (NULL);

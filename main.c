@@ -26,12 +26,16 @@ void exec(char *ch)
                	exe = path_finder(argv);
                 if (!exe)
                 {
-                       	if (execve(argv[0], argv, environ) < 0)
+			if (stat(argv[0], &filestat) == 0)
 			{
-                                perror("./shell");
-				//free_everything(argv);
-                                exit(1);
+                       		if (execve(argv[0], argv, environ) < 0)
+				{
+                                	perror("./shell");
+					//free_everything(argv);
+                                	exit(1);
+				}
 			}
+			
 		}
                 if (execve(exe, argv, environ) < 0)
                 {
