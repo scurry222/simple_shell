@@ -1,9 +1,17 @@
 #include "shell.h"
 
+/**
+* exec - handles execution of commands
+* @ch: line from standard input to be parsed
+*
+* Return: void
+*/
+
 void exec(char *ch)
 {
 	char *exe;
 	char **argv;
+	struct stat filestat;
 
 	pid_t child_pid = fork();
 
@@ -15,28 +23,30 @@ void exec(char *ch)
 	if (child_pid == 0)
 	{
 		argv = strtow(ch);
-                exe = path_finder(argv);
+               	exe = path_finder(argv);
                 if (!exe)
                 {
-                        if (execve(argv[0], argv, environ) < 0)
-                        {
-                                perror("./shell");
-			//	free_everything(argv);
-                                exit(1);
-                        }
-                }
+			if (stat(argv[0], &filestat) == 0)
+			{
+                       		if (execve(argv[0], argv, environ) < 0)
+				{
+                                	perror("./shell");
+					//free_everything(argv);
+                                	exit(1);
+				}
+			}
+			
+		}
                 if (execve(exe, argv, environ) < 0)
                 {
-                        perror("./shell");
+                       	perror("./shell");
 		//	free_everything(argv);
                         exit(1);
-                }	
+                }
 	}	
 	else
 		wait(NULL);
-	//free(exe);
-	//free(ch);
-	//free_everything(argv);
+	free_everything(argv);
 }
 
 /**
@@ -63,7 +73,10 @@ int main(void)
 			return (0);
 		}
 		if (_strcmp(ch, "exit\n") == 0)
+		{
+			free(ch);
 			exit(EXIT_SUCCESS);
+		}
 		if (_strcmp(ch, "env\n") == 0)
 		{
 			print_env();
@@ -75,6 +88,5 @@ int main(void)
 		exec(ch);
 		continue;
 	}
-	free(ch);
 	return (0);
 }
