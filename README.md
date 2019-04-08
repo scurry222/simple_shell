@@ -4,7 +4,7 @@
 This team project is part of the first year curriculum of Holberton School.
 Simple Shell is a command line interpreter that replicates the **sh** program.
 
-What we learnt:
+What we learned:
 * How a shell works and finds commands
 * Creating, forking and working with processes
 * Executing another program from a program
@@ -43,9 +43,20 @@ drwxrwxr-x 7 vagrant vagrant  4096 Apr  7 01:48 0x15
 -rwxrw-r-- 1 vagrant vagrant    28 Apr  7 15:35 ls.sh
 ```
 ```bash
-($) potato
+($) baguette
 ./shell: No such file or directory
 ```
+## Files
+
+File | Content
+---- | -----------
+[main.c](./main.c) | entry point, executing function
+[shell.h](./shell.h) | function protoypes, standard libraries
+[print_funcs.c](./print_funcs.c) | printing functions
+[string_funcs.c](./string_funcs.c) | string-handling functions
+[strtow.c](./strtow.c) | string to word parsing function
+[parse_path.c](./parse_path.c) | functions that check the PATH for commands
+[free.c](./free.c) | memory-handling functions
 
 ## Authors
 
