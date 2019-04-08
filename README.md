@@ -13,8 +13,9 @@ What we learned:
 
 ---
 
-## Run
-```./shell```
+## Compile and run
+```gcc -Wall -Werror -Wextra -pedantic *.c -o hsh```
+```./hsh```
 
 ## Usage
 * Prints a prompt and waits for a command from the user
@@ -29,7 +30,7 @@ What we learned:
 ## Examples
 ```bash
 ($) /bin/ls
-foo main.c README.md tests
+foo main.c coquille.c README.md tests croissant.c
 ```
 ```bash
 ($) pwd 
@@ -38,13 +39,13 @@ foo main.c README.md tests
 ```bash
 ($) ls -l
 total 60
-drwxrwxr-x 7 vagrant vagrant  4096 Apr  7 01:48 0x15
--rw-rw-r-- 1 vagrant vagrant   148 Apr  7 00:00 free.c
--rwxrw-r-- 1 vagrant vagrant    28 Apr  7 15:35 ls.sh
+drwxrwxr-x 7 vagrant vagrant  4096 Apr  7 01:48 foo
+-rw-rw-r-- 1 vagrant vagrant   148 Apr  7 00:00 main.c
+-rwxrw-r-- 1 vagrant vagrant    28 Apr  7 15:35 coquille.c
 ```
 ```bash
 ($) baguette
-./shell: No such file or directory
+./hsh: No such file or directory
 ```
 ## Files
 
