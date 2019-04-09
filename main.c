@@ -18,7 +18,7 @@ void exec(char **argv, char *s, int i)
 
 	if (child_pid == -1)
 	{
-		perror("./shell");
+		perror(s);
 		exit(1);
 	}
 	if (child_pid == 0)
