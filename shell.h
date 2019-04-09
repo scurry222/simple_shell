@@ -16,12 +16,12 @@ extern char **environ;
 
 /* main.c */
 void exec(char **argv, char *s, int i);
-void print_error(int i, char *s, char **argv);
 
 /* print_funcs.c */
 int _putchar(char c);
 int print_env(char **av);
 void print_prompt(void);
+void print_error(int i, char *s, char **argv);
 
 /* string_funcs.c */
 int _strcmp(char *s1, char *s2);
@@ -52,7 +52,7 @@ char **_strtok(char *str, char delim);
 int wordcount(char *str, char delim);
 
 /* builtins.c */
-void exit_handler(char *s);
+void exit_handler(char **tokens);
 int _atoi(char *s);
 char *_strstr(char *haystack, char *needle);
 

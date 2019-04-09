@@ -1,8 +1,7 @@
 #include "shell.h"
 
-void exit_handler(char *s)
+void exit_handler(char **tokens)
 {
-	char **tokens = strtow(s);
 	int flag = 0, i, num;
 
 	if (_strcmp(tokens[0], "exit") == 0)

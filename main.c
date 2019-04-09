@@ -26,7 +26,7 @@ void exec(char **argv, char *s, int i)
                	exe = path_finder(argv);
                 if (!exe)
                 {
-                       	if (argv[0] && execve(argv[0], argv, environ) == -1)
+			if (argv[0] && execve(argv[0], argv, environ) == -1)
 			{
 				print_error(i, s, argv);
 				//free_everything(argv);
@@ -61,7 +61,6 @@ int main(int ac, char *av[])
 	int i = 1;
 	int get, n;
 	char *ch;
-	char **chcpy;
 	char **argv;
 	(void)ac;
 
@@ -76,10 +75,12 @@ int main(int ac, char *av[])
 				_putchar('\n');
 			return (0);
 		}
-		chcpy = _strtok(ch, '\n');
-		argv = _strtok(chcpy[0], ' ');
+		if (_strcmp(ch, "\n") == 0)
+			continue;
+		ch[get - 1] = '\0';
+		argv = strtow(ch);
 		if (_strstr(ch, "exit"))
-			exit_handler(ch);
+			exit_handler(argv);
 		if (_strstr(ch, "env"))
 		{
 			n = print_env(argv);
@@ -87,8 +88,6 @@ int main(int ac, char *av[])
 				print_error(i, av[0], argv);
 			continue;
 		}
-		if (_strcmp(ch, "\n") == 0)
-			continue;
 		exec(argv, av[0], i);
 		i++;
 		continue;

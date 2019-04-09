@@ -36,8 +36,6 @@ char **get_env(char *name)
 		path = _strtok(env[i], '=');
 		if (_strcmp(name, path[0]) == 0)
 		{
-			if (path[1][0] != '/' || !path[1])
-				return (NULL);
 			value = _strtok(path[1], ':');
 			return (value);
 		}
@@ -55,34 +53,18 @@ char **get_env(char *name)
 /*
 char **parse_path(char *value)
 {
-	char *token;
 	char **arr;
-	int i;
-	int count = 0;
+
+//	printf("Entering parse_path\n");
 
 	if (value[0] != '/' || !value)
 		return (NULL);
 
-	count = strtok_count(value);
-	arr = malloc(sizeof(char *) * (count + 1));
+	arr = _strtok(value, ':');
+//	printf("This is the first element of the path: %s\n", arr[0]);
 	if (!arr)
 		return (NULL);
 
-	token = strtok(value, ":");
-	arr[0] = malloc(sizeof(char) * _strlen(token));
-	if (!arr[0])
-		return (NULL);
-
-	arr[0] = token;
-
-	for (i = 0; (token = strtok(NULL, ":")); i++)
-	{
-		arr[i] = malloc(sizeof(char) * _strlen(token));
-		if (!arr[i])
-			return (NULL);
-		arr[i] = token;
-	}
-	arr[i] = NULL;
 	return (arr);
 }
 */
@@ -98,18 +80,19 @@ char *path_finder(char **s)
 	int i;
 	char *dir;
 	char *prog;
-	char **path_arr;
+	char **path_value;
 
-	path_arr = get_env("PATH");
-	if (!path_arr)
+	path_value = get_env("PATH");
+	if (path_value[0][0] != '/' || !path_value)
 		return (NULL);
-//	path_arr = parse_path(path);
-//	if (!path_arr)
-//		return (NULL);
+	//printf("in pathfinder\n");
+	/*path_arr = parse_path(path_value);
+	if (!path_arr)
+		return (NULL);*/
 
-	for (i = 0; path_arr[i]; i++)
+	for (i = 0; path_value[i]; i++)
 	{
-		dir = str_concat(path_arr[i], "/");
+		dir = str_concat(path_value[i], "/");
 		prog = str_concat(dir, s[0]);
 		free(dir);
 		if (access(prog, X_OK) == 0)
