@@ -32,7 +32,7 @@ char *convert(int num, int base);
 
 /* parse_path.c */
 int strtok_count(char *value);
-char *get_env(char *name);
+char **get_env(char *name);
 char **parse_path(char *value);
 char *path_finder(char **s);
 
@@ -47,6 +47,11 @@ char **_strtok(char *str, char delim);
 /* free.c */
 void free_everything(char **args);
 
+/* strtok.c */
+char **_strtok(char *str, char delim);
+int wordcount(char *str, char delim);
+
+/* builtins.c */
 void exit_handler(char *s);
 int _atoi(char *s);
 char *_strstr(char *haystack, char *needle);
