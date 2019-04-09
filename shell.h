@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <errno.h>
+#include <limits.h>
 
 extern char **environ;
 
@@ -52,8 +53,8 @@ char **_strtok(char *str, char delim);
 int wordcount(char *str, char delim);
 
 /* builtins.c */
-void exit_handler(char **tokens);
-int _atoi(char *s);
+int exit_handler(char **tokens);
+int _atoi(const char *s);
 char *_strstr(char *haystack, char *needle);
 
 #endif

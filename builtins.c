@@ -1,8 +1,8 @@
 #include "shell.h"
 
-void exit_handler(char **tokens)
+int exit_handler(char **tokens)
 {
-	int flag = 0, i, num;
+	int flag = 0, i, num = 0;
 
 	if (_strcmp(tokens[0], "exit") == 0)
 	{
@@ -21,11 +21,13 @@ void exit_handler(char **tokens)
 			}
 			if (flag == 1)
 			{
-				num = _atoi(tokens[1]);
+				num = atoi(tokens[1]);
+				printf("%d\n", num);
 				exit(num);
 			}
 		}
 	}
+	return (num);
 }
 
 /**
@@ -34,43 +36,27 @@ void exit_handler(char **tokens)
  *
  * Return: the int converted from the string
  */
-int _atoi(char *s)
+int _atoi(const char *str)
 {
-	int i, d, n, len, f, digit;
+	int i = 0, base = 0, sign = 1;
 
-	i = 0;
-	d = 0;
-	n = 0;
-	len = 0;
-	f = 0;
-	digit = 0;
-
-	while (s[len] != '\0')
-		len++;
-
-	while (i < len && f == 0)
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (s[i] == '-')
-			++d;
-
-		if (s[i] >= '0' && s[i] <= '9')
+		if (str[i] == '-' || str[i] == '+')
 		{
-			digit = s[i] - '0';
-			if (d % 2)
-				digit = -digit;
-			n = n * 10 + digit;
-			f = 1;
-			if (s[i + 1] < '0' || s[i + 1] > '9')
-				break;
-			f = 0;
+			sign = 1 - 2 * (str[i++] == '-');  
+		} 
+		if (base >  INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7))
+		{
+			if (sign == 1)
+				return INT_MAX;
+			else
+				return INT_MIN;
 		}
-		i++;
+		base  = 10 * base + (str[i++] - '0');
+
 	}
-
-	if (f == 0)
-		return (0);
-
-	return (n);
+	return (base * sign);
 }
 
 /**

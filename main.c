@@ -59,7 +59,7 @@ int main(int ac, char *av[])
 {
 	size_t len = 0;
 	int i = 1;
-	int get, n;
+	int get, n, m;
 	char *ch;
 	char **argv;
 	(void)ac;
@@ -80,7 +80,14 @@ int main(int ac, char *av[])
 		ch[get - 1] = '\0';
 		argv = strtow(ch);
 		if (_strstr(ch, "exit"))
-			exit_handler(argv);
+		{
+			m = exit_handler(argv);
+			if (m == -1)
+			{
+				perror("./shell");
+				continue;
+			}
+		}
 		if (_strstr(ch, "env"))
 		{
 			n = print_env(argv);
