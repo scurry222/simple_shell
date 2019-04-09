@@ -10,11 +10,13 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <errno.h>
 
 extern char **environ;
 
 /* main.c */
-void exec(char *ch);
+void exec(char **argv, char *s, int i);
+void print_error(int i, char *s, char **argv);
 
 /* print_funcs.c */
 int _putchar(char c);
@@ -26,6 +28,7 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 int _strlen(char *s);
 char *str_concat(char *s1, char *s2);
+char *convert(int num, int base);
 
 /* parse_path.c */
 int strtok_count(char *value);
