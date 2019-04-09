@@ -36,6 +36,8 @@ char **get_env(char *name)
 		path = _strtok(env[i], '=');
 		if (_strcmp(name, path[0]) == 0)
 		{
+			if (path[1][0] != '/' || !path[1])
+				return (NULL);
 			value = _strtok(path[1], ':');
 			return (value);
 		}

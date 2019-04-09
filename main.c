@@ -61,6 +61,7 @@ int main(int ac, char *av[])
 	int i = 1;
 	int get, n;
 	char *ch;
+	char **chcpy;
 	char **argv;
 	(void)ac;
 
@@ -75,8 +76,8 @@ int main(int ac, char *av[])
 				_putchar('\n');
 			return (0);
 		}
-		strtok(ch, "\n");
-		argv = strtow(ch);
+		chcpy = _strtok(ch, '\n');
+		argv = _strtok(chcpy[0], ' ');
 		if (_strstr(ch, "exit"))
 			exit_handler(ch);
 		if (_strstr(ch, "env"))
