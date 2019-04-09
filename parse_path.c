@@ -7,18 +7,11 @@
 * Return: count of tokens
 */
 
-int strtok_count(char *value)
+int _strtok_count(char **value)
 {
-	char *valcopy = NULL;
-	char *token;
 	int count = 0, i;
 
-	valcopy = _strdup(value);
-
-	token = strtok(valcopy, ":");
-		count++;
-
-	for (i = 0; (token = strtok(NULL, ":")); i++)
+	for (i = 0; value[i]; i++)
 		count++;
 
 	return (count);
@@ -31,22 +24,23 @@ int strtok_count(char *value)
 * Return: value at key
 */
 
-char *get_env(char *name)
+char **get_env(char *name)
 {
-	char **env, *value = NULL, *pathname = NULL;
+	char **env, **value, **path;
 	int i;
 
 	env = environ;
 
 	for (i = 0; env[i]; i++)
 	{
-		pathname = strtok(env[i], "=");
-		if (_strcmp(name, pathname) == 0)
+		path = _strtok(env[i], '=');
+		if (_strcmp(name, path[0]) == 0)
 		{
-			value = strtok(NULL, env[i]);
+			value = _strtok(path[1], ':');
 			return (value);
 		}
 	}
+	free(path);
 	return (NULL);
 }
 
@@ -56,7 +50,7 @@ char *get_env(char *name)
 *
 * Return: array of strings
 */
-
+/*
 char **parse_path(char *value)
 {
 	char *token;
@@ -89,7 +83,7 @@ char **parse_path(char *value)
 	arr[i] = NULL;
 	return (arr);
 }
-
+*/
 /**
 * path_finder - connect dirs in PATH with inputted command, check if executable
 * @s: input, in form array of strings
@@ -100,17 +94,16 @@ char **parse_path(char *value)
 char *path_finder(char **s)
 {
 	int i;
-	char *path;
 	char *dir;
 	char *prog;
 	char **path_arr;
 
-	path = get_env("PATH");
-	if (!path)
-		return (NULL);
-	path_arr = parse_path(path);
+	path_arr = get_env("PATH");
 	if (!path_arr)
 		return (NULL);
+//	path_arr = parse_path(path);
+//	if (!path_arr)
+//		return (NULL);
 
 	for (i = 0; path_arr[i]; i++)
 	{
