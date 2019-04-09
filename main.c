@@ -2,50 +2,48 @@
 
 /**
 * exec - handles execution of commands
-* @ch: line from standard input to be parsed
+* @argv: array of arguments from standard input
+* @s: name of the program
+* @i: index of error
 *
 * Return: void
 */
 
-void exec(char *ch)
+void exec(char **argv, char *s, int i)
 {
+	int status;
 	char *exe;
-	char **argv;
-	struct stat filestat;
 
 	pid_t child_pid = fork();
 
 	if (child_pid == -1)
 	{
-		perror("./shell");
+		perror(s);
 		exit(1);
 	}
 	if (child_pid == 0)
 	{
-		argv = strtow(ch);
                	exe = path_finder(argv);
                 if (!exe)
                 {
-			if (stat(argv[0], &filestat) == 0)
+                       	if (argv[0] && execve(argv[0], argv, environ) == -1)
 			{
-                       		if (execve(argv[0], argv, environ) < 0)
-				{
-                                	perror("./shell");
-					//free_everything(argv);
-                                	exit(1);
-				}
+				print_error(i, s, argv);
+				//free_everything(argv);
+				exit(1);
 			}
-			
 		}
-                if (execve(exe, argv, environ) < 0)
+                if (execve(exe, argv, environ) == -1)
                 {
-                       	perror("./shell");
+			print_error(i, s, argv);
 		//	free_everything(argv);
                         exit(1);
                 }
 	}	
 	else
-		wait(NULL);
+	{
+		wait(&status);
+	}
 	free_everything(argv);
 }
 
@@ -53,39 +51,45 @@ void exec(char *ch)
  * main - simple command-line argument interpreter
  * Description: prints a prompt and waits for the user to input a command,
  * then creates a child process in which it exececutes the command
+ * @ac: number of arguments
+ * @av: array of arguments
  * Return: Always 0.
  */
-int main(void)
+int main(int ac, char *av[])
 {
 	size_t len = 0;
-	int get;
+	int i = 1;
+	int get, n;
 	char *ch;
+	char **argv;
+	(void)ac;
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO) != 0)
+		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 			print_prompt();
 		get = getline(&ch, &len, stdin);
 		if (get < 0)
 		{
-			if (isatty(STDIN_FILENO) != 0)
+			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
 			return (0);
 		}
-		if (_strcmp(ch, "exit\n") == 0)
+		strtok(ch, "\n");
+		argv = strtow(ch);
+		if (_strstr(ch, "exit"))
+			exit_handler(ch);
+		if (_strstr(ch, "env"))
 		{
-			free(ch);
-			exit(EXIT_SUCCESS);
-		}
-		if (_strcmp(ch, "env\n") == 0)
-		{
-			print_env();
+			n = print_env(argv);
+			if (n == -1)
+				print_error(i, av[0], argv);
 			continue;
 		}
 		if (_strcmp(ch, "\n") == 0)
 			continue;
-		strtok(ch, "\n");
-		exec(ch);
+		exec(argv, av[0], i);
+		i++;
 		continue;
 	}
 	return (0);

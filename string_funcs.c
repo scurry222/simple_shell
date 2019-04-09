@@ -114,3 +114,24 @@ char *_strdup(char *str)
 
 	return (dup);
 }
+/**
+ * convert - converts number and base into string
+ * @num: input number
+ * @base: input base
+ * Return: result string
+ */
+char *convert(int num, int base)
+{
+	static char *rep = "0123456789";
+	static char buffer[50];
+	char *ptr;
+
+	ptr = &buffer[49];
+	*ptr = '\0';
+	do {
+		*--ptr = rep[num % base];
+		num /= base;
+	} while (num != 0);
+
+	return (ptr);
+}
