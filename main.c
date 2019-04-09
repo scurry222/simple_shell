@@ -59,7 +59,7 @@ int main(int ac, char *av[])
 {
 	size_t len = 0;
 	int i = 1;
-	int get;
+	int get, n;
 	char *ch;
 	char **argv;
 	(void)ac;
@@ -75,20 +75,19 @@ int main(int ac, char *av[])
 				_putchar('\n');
 			return (0);
 		}
-		if (_strcmp(ch, "exit\n") == 0)
+		strtok(ch, "\n");
+		argv = strtow(ch);
+		if (_strstr(ch, "exit"))
+			exit_handler(ch);
+		if (_strstr(ch, "env"))
 		{
-			free(ch);
-			exit(EXIT_SUCCESS);
-		}
-		if (_strcmp(ch, "env\n") == 0)
-		{
-			print_env();
+			n = print_env(argv);
+			if (n == -1)
+				print_error(i, av[0], argv);
 			continue;
 		}
 		if (_strcmp(ch, "\n") == 0)
 			continue;
-		strtok(ch, "\n");
-		argv = strtow(ch);
 		exec(argv, av[0], i);
 		i++;
 		continue;

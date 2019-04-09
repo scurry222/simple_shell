@@ -20,7 +20,7 @@ void print_error(int i, char *s, char **argv);
 
 /* print_funcs.c */
 int _putchar(char c);
-void print_env(void);
+int print_env(char **av);
 void print_prompt(void);
 
 /* string_funcs.c */
@@ -42,5 +42,9 @@ int count_word(char *s);
 
 /* free.c */
 void free_everything(char **args);
+
+void exit_handler(char *s);
+int _atoi(char *s);
+char *_strstr(char *haystack, char *needle);
 
 #endif

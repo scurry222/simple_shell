@@ -17,13 +17,13 @@ void print_error(int i, char *s, char **argv)
 	char *buf = str_concat(s, ": ");
 	char *number = convert(i, 10);
 
-	buf = str_concat(buf, number);
-	buf = str_concat(buf, ": ");
-	buf = str_concat(buf, argv[0]);
-	buf = str_concat(buf, ": not found\n");
-
 	if (errno == ENOENT || errno == ENOTDIR)
 	{
+		buf = str_concat(buf, number);
+		buf = str_concat(buf, ": ");
+		buf = str_concat(buf, argv[0]);
+		buf = str_concat(buf, ": not found\n");
+
 		write(2, buf, _strlen(buf));
 	}
 	else
@@ -41,15 +41,21 @@ void print_prompt(void)
 
 /**
  * print_env - replicates the bash env function
+ * @av: array of arguments from the command line
  */
-void print_env(void)
+int print_env(char **av)
 {
 	int i, j;
 
-	for (i = 0; environ[i]; i++)
+	if (_strcmp(av[0], "env") == 0 && av[1] == NULL)
 	{
-		for (j = 0; environ[i][j]; j++)
-			_putchar(environ[i][j]);
-		_putchar('\n');
+		for (i = 0; environ[i]; i++)
+		{
+			for (j = 0; environ[i][j]; j++)
+				_putchar(environ[i][j]);
+			_putchar('\n');
+		}
+		return (0);
 	}
+	return (-1);
 }
