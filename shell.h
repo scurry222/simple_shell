@@ -40,6 +40,10 @@ char *path_finder(char **s);
 char **strtow(char *str);
 int count_word(char *s);
 
+/* strtok.c */
+int wordcount(char *str, char delim);
+char **_strtok(char *str, char delim);
+
 /* free.c */
 void free_everything(char **args);
 
