@@ -92,9 +92,8 @@ char *path_finder(char **s)
 
 	for (i = 0; path_value[i]; i++)
 	{
-		dir = str_concat(path_value[i], "/");
-		prog = str_concat(dir, s[0]);
-		free(dir);
+		dir = _strcat(path_value[i], "/");
+		prog = _strcat(dir, s[0]);
 		if (access(prog, X_OK) == 0)
 			return (prog);
 		else

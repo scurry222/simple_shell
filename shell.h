@@ -28,8 +28,8 @@ void print_error(int i, char *s, char **argv);
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 int _strlen(char *s);
-char *str_concat(char *s1, char *s2);
 char *convert(int num, int base);
+char *_strcat(char *dest, char *src);
 
 /* parse_path.c */
 int strtok_count(char *value);
@@ -47,10 +47,6 @@ char **_strtok(char *str, char delim);
 
 /* free.c */
 void free_everything(char **args);
-
-/* strtok.c */
-char **_strtok(char *str, char delim);
-int wordcount(char *str, char delim);
 
 /* builtins.c */
 int exit_handler(char **tokens);
