@@ -4,15 +4,17 @@
 int wordcount(char *str, char delim)
 {
 	int num = 0, i;
+	int flag = 0;
 
-	for (i = 0; str[i] != '\0'; i++)
+	for (i = 0; str[i]; i++)
 	{
 		if (str[i] == delim)
-			str++;
-		else
+			flag = 0;
+		else if (flag == 0)
 		{
-			while (str[i] != delim && str[i])
-				i++;
+//			while (str[i] != delim && str[i])
+//				i++;
+			flag = 1;
 			num++;
 		}
 	}
@@ -52,6 +54,8 @@ char **_strtok(char *str, char delim)
 				str++;
 			}
 			words[i] = malloc(sizeof(char) * (len + 1));
+			if (!words[i])
+				return (NULL);
 			while (*cpy != delim && *cpy && *cpy != '\n')
 			{
 				words[i][j] = *cpy;
@@ -64,5 +68,6 @@ char **_strtok(char *str, char delim)
 			len = 0;
 		}
 	}
+	words[i] = NULL;
 	return (words);
 }

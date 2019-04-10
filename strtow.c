@@ -47,7 +47,7 @@ char **strtow(char *str)
 		return (NULL);
 	}
 
-	matrix = (char **) malloc(sizeof(char *) * (words + 1));
+	matrix = malloc(sizeof(char *) * (words + 1));
 	if (matrix == NULL)
 	{
 		free(str);
@@ -61,7 +61,7 @@ char **strtow(char *str)
 			if (c)
 			{
 				end = i;
-				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				tmp = malloc(sizeof(char) * (c + 1));
 				if (tmp == NULL)
 					return (NULL);
 				while (start < end)

@@ -30,7 +30,7 @@ char *_strdup(char *str);
 int _strlen(char *s);
 char *convert(int num, int base);
 char *_strcat(char *dest, char *src);
-
+char *str_concat(char *s1, char *s2);
 /* parse_path.c */
 int strtok_count(char *value);
 char **get_env(char *name);

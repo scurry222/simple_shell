@@ -60,8 +60,8 @@ int main(int ac, char *av[])
 	size_t len = 0;
 	int i = 1;
 	int get, n, m;
-	char *ch;
-	char **argv;
+	char *ch = NULL;
+	char **argv = NULL;
 	(void)ac;
 
 	while (1)

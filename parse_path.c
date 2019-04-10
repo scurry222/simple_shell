@@ -26,7 +26,7 @@ int _strtok_count(char **value)
 
 char **get_env(char *name)
 {
-	char **env, **value, **path;
+	char **env = NULL, **value = NULL, **path = NULL;
 	int i;
 
 	env = environ;
@@ -37,10 +37,10 @@ char **get_env(char *name)
 		if (_strcmp(name, path[0]) == 0)
 		{
 			value = _strtok(path[1], ':');
+			free_everything(path);
 			return (value);
 		}
 	}
-	free(path);
 	return (NULL);
 }
 
@@ -78,13 +78,16 @@ char **parse_path(char *value)
 char *path_finder(char **s)
 {
 	int i;
-	char *dir;
-	char *prog;
-	char **path_value;
+	char *dir = NULL;
+	char *prog = NULL;
+	char **path_value = NULL;
 
 	path_value = get_env("PATH");
 	if (path_value[0][0] != '/' || !path_value)
+	{
+		free_everything(path_value);
 		return (NULL);
+	}
 	//printf("in pathfinder\n");
 	/*path_arr = parse_path(path_value);
 	if (!path_arr)
@@ -92,13 +95,15 @@ char *path_finder(char **s)
 
 	for (i = 0; path_value[i]; i++)
 	{
-		dir = _strcat(path_value[i], "/");
-		prog = _strcat(dir, s[0]);
+		dir = str_concat(path_value[i], "/");
+		prog = str_concat(dir, s[0]);
 		if (access(prog, X_OK) == 0)
+		{
+			free_everything(path_value);
 			return (prog);
-		else
-			free(prog);
+		}
+		
 	}
-
+	free_everything(path_value);
 	return (NULL);
 }
