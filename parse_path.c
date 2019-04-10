@@ -1,23 +1,6 @@
 #include "shell.h"
 
 /**
-* strtok_count - count the amount of tokens returned from strtok
-* @value: original string (value of PATH)
-
-* Return: count of tokens
-*/
-
-int _strtok_count(char **value)
-{
-	int count = 0, i;
-
-	for (i = 0; value[i]; i++)
-		count++;
-
-	return (count);
-}
-
-/**
 * get_env - access environment to get value at passed in name
 * @name: key (key=value) to select in env
 *
