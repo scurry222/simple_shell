@@ -40,34 +40,16 @@ char **get_env(char *name)
 			free_everything(path);
 			return (value);
 		}
+		else
+		{
+			free_everything(path);
+			free_everything(value);
+		}
 	}
+	free_everything(path);
+	free_everything(value);
 	return (NULL);
 }
-
-/**
-* parse_path - turn PATH string into array of strings (one dir per string)
-* @value: string containing all dirs in path
-*
-* Return: array of strings
-*/
-/*
-char **parse_path(char *value)
-{
-	char **arr;
-
-//	printf("Entering parse_path\n");
-
-	if (value[0] != '/' || !value)
-		return (NULL);
-
-	arr = _strtok(value, ':');
-//	printf("This is the first element of the path: %s\n", arr[0]);
-	if (!arr)
-		return (NULL);
-
-	return (arr);
-}
-*/
 /**
 * path_finder - connect dirs in PATH with inputted command, check if executable
 * @s: input, in form array of strings
@@ -88,10 +70,6 @@ char *path_finder(char **s)
 		free_everything(path_value);
 		return (NULL);
 	}
-	//printf("in pathfinder\n");
-	/*path_arr = parse_path(path_value);
-	if (!path_arr)
-		return (NULL);*/
 
 	for (i = 0; path_value[i]; i++)
 	{
@@ -100,9 +78,11 @@ char *path_finder(char **s)
 		if (access(prog, X_OK) == 0)
 		{
 			free_everything(path_value);
+			free(dir);
 			return (prog);
 		}
-		
+		free(dir);
+		free(prog);	
 	}
 	free_everything(path_value);
 	return (NULL);

@@ -23,7 +23,6 @@ void print_error(int i, char *s, char **argv)
 		buf = _strcat(buf, ": ");
 		buf = _strcat(buf, argv[0]);
 		buf = _strcat(buf, ": not found\n");
-
 		write(2, buf, _strlen(buf));
 	}
 	else
@@ -35,8 +34,8 @@ void print_error(int i, char *s, char **argv)
  */
 void print_prompt(void)
 {
-	char *s = "($) ";
-	write(2, s, 5);
+	char *s = "$ ";
+	write(2, s, 2);
 }
 
 /**

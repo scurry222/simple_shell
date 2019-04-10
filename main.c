@@ -12,13 +12,14 @@
 void exec(char **argv, char *s, int i)
 {
 	int status;
-	char *exe;
+	char *exe = NULL;
 
 	pid_t child_pid = fork();
 
 	if (child_pid == -1)
 	{
 		perror(s);
+		free_everything(argv);
 		exit(1);
 	}
 	if (child_pid == 0)
@@ -26,17 +27,22 @@ void exec(char **argv, char *s, int i)
                	exe = path_finder(argv);
                 if (!exe)
                 {
-			if (argv[0] && execve(argv[0], argv, environ) == -1)
+			if (argv[0])
 			{
-				print_error(i, s, argv);
-				//free_everything(argv);
-				exit(1);
+				if (execve(argv[0], argv, environ) == -1)
+				{
+					print_error(i, s, argv);
+					free_everything(argv);
+					exit(1);
+				}
 			}
+			free_everything(argv);		
 		}
                 if (execve(exe, argv, environ) == -1)
                 {
 			print_error(i, s, argv);
-		//	free_everything(argv);
+			free(exe);
+			free_everything(argv);
                         exit(1);
                 }
 	}	
@@ -73,6 +79,7 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
+			free(ch);
 			return (0);
 		}
 		if (_strcmp(ch, "\n") == 0)
@@ -85,21 +92,31 @@ int main(int ac, char *av[])
 			if (m == -1)
 			{
 				perror("./shell");
+				free(ch);
 				continue;
 			}
 			else
+			{
+				free_everything(argv);
+				free(ch);
 				exit(m);
+			}
 		}
 		if (_strstr(ch, "env"))
 		{
 			n = print_env(argv);
 			if (n == -1)
+			{
 				print_error(i, av[0], argv);
+				free(ch);
+			}
+			free_everything(argv);
 			continue;
 		}
 		exec(argv, av[0], i);
 		i++;
 		continue;
 	}
+	free(ch);
 	return (0);
 }

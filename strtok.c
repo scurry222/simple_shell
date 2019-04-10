@@ -30,7 +30,7 @@ int wordcount(char *str, char delim)
 
 char **_strtok(char *str, char delim)
 {
-	char *cpy, **words;
+	char *cpy = NULL, **words = NULL;
 	int i = 0, j = 0, len = 0, total = 0;
 
 	if (str == 0 || *str == 0)
