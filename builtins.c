@@ -22,7 +22,6 @@ int exit_handler(char **tokens)
 			if (flag == 1)
 			{
 				num = atoi(tokens[1]);
-				printf("%d\n", num);
 				exit(num);
 			}
 		}
