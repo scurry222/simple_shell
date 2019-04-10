@@ -7,7 +7,7 @@ int exit_handler(char **tokens)
 	if (_strcmp(tokens[0], "exit") == 0)
 	{
 		if (tokens[1] == NULL)
-			exit(EXIT_SUCCESS);
+			return (0);
 		else
 		{
 			for (i = 0; tokens[1][i]; i++)
@@ -21,8 +21,9 @@ int exit_handler(char **tokens)
 			}
 			if (flag == 1)
 			{
-				num = atoi(tokens[1]);
-				exit(num);
+				num = _atoi(tokens[1]);
+				if (num == -1)
+					return (-1);
 			}
 		}
 	}
@@ -35,27 +36,46 @@ int exit_handler(char **tokens)
  *
  * Return: the int converted from the string
  */
-int _atoi(const char *str)
+int _atoi(const char *s)
 {
-	int i = 0, base = 0, sign = 1;
+	int i, d, n, len, f, digit;
 
-	while (str[i] >= '0' && str[i] <= '9')
+	i = 0;
+	d = 0;
+	n = 0;
+	len = 0;
+	f = 0;
+	digit = 0;
+
+	while (s[len] != '\0')
+		len++;
+
+	while (i < len && f == 0)
 	{
-		if (str[i] == '-' || str[i] == '+')
-		{
-			sign = 1 - 2 * (str[i++] == '-');  
-		} 
-		if (base >  INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7))
-		{
-			if (sign == 1)
-				return INT_MAX;
-			else
-				return INT_MIN;
-		}
-		base  = 10 * base + (str[i++] - '0');
+		if (s[i] == '-')
+			++d;
 
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			digit = s[i] - '0';
+			if (d % 2)
+				digit = -digit;
+			n = n * 10 + digit;
+			f = 1;
+			if (s[i + 1] < '0' || s[i + 1] > '9')
+				break;
+			f = 0;
+		}
+		i++;
 	}
-	return (base * sign);
+
+	if (f == 0)
+		return (0);
+
+	if (n > INT_MAX || n < 0)
+		return (-1);
+
+	return (n);
 }
 
 /**

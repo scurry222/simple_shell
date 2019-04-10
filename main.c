@@ -87,6 +87,8 @@ int main(int ac, char *av[])
 				perror("./shell");
 				continue;
 			}
+			else
+				exit(m);
 		}
 		if (_strstr(ch, "env"))
 		{
