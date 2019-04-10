@@ -14,7 +14,7 @@ int _putchar(char c)
 
 void print_error(int i, char *s, char **argv)
 {
-	char *buf = str_concat(s, ": ");
+	char *buf = _strcat(s, ": ");
 	char *number = convert(i, 10);
 
 	if (errno == ENOENT || errno == ENOTDIR)
