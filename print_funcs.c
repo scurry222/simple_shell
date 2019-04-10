@@ -19,10 +19,10 @@ void print_error(int i, char *s, char **argv)
 
 	if (errno == ENOENT || errno == ENOTDIR)
 	{
-		buf = str_concat(buf, number);
-		buf = str_concat(buf, ": ");
-		buf = str_concat(buf, argv[0]);
-		buf = str_concat(buf, ": not found\n");
+		buf = _strcat(buf, number);
+		buf = _strcat(buf, ": ");
+		buf = _strcat(buf, argv[0]);
+		buf = _strcat(buf, ": not found\n");
 
 		write(2, buf, _strlen(buf));
 	}
