@@ -24,9 +24,9 @@ void exec(char **argv, char *s, int i)
 	}
 	if (child_pid == 0)
 	{
-               	exe = path_finder(argv);
-                if (!exe)
-                {
+		exe = path_finder(argv);
+		if (!exe)
+		{
 			if (argv[0])
 			{
 				if (execve(argv[0], argv, environ) == -1)
@@ -35,17 +35,17 @@ void exec(char **argv, char *s, int i)
 					free_everything(argv);
 					exit(1);
 				}
+				free_everything(argv);
 			}
-			free_everything(argv);		
 		}
-                if (execve(exe, argv, environ) == -1)
-                {
+		if (execve(exe, argv, environ) == -1)
+		{
 			print_error(i, s, argv);
 			free(exe);
 			free_everything(argv);
-                        exit(1);
-                }
-	}	
+			exit(1);
+		}
+	}
 	else
 	{
 		wait(&status);
@@ -59,6 +59,7 @@ void exec(char **argv, char *s, int i)
  * then creates a child process in which it exececutes the command
  * @ac: number of arguments
  * @av: array of arguments
+ *
  * Return: Always 0.
  */
 int main(int ac, char *av[])
@@ -78,7 +79,7 @@ int main(int ac, char *av[])
 		if (get < 0)
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
-				_putchar('\n');
+				putchar('\n');
 			free(ch);
 			return (0);
 		}

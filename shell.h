@@ -46,7 +46,7 @@ void free_everything(char **args);
 
 /* builtins.c */
 int exit_handler(char **tokens);
-int _atoi(const char *s);
+int _atoi(char *s);
 char *_strstr(char *haystack, char *needle);
 
 #endif

@@ -1,5 +1,12 @@
 #include "shell.h"
 
+/**
+ * exit_handler - handles the builtin exit with arguments
+ * @tokens: array of strings from the command line
+ *
+ * Return: 0 if there are no arguments,
+ * -1 on failure, or the value of the argument
+ */
 int exit_handler(char **tokens)
 {
 	int flag = 0, i, num = 0;
@@ -8,23 +15,20 @@ int exit_handler(char **tokens)
 	{
 		if (tokens[1] == NULL)
 			return (0);
-		else
+		for (i = 0; tokens[1][i]; i++)
 		{
-			for (i = 0; tokens[1][i]; i++)
+			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
 			{
-				if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
-				{
-					flag = 1;
-					if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
-						break;
-				}
+				flag = 1;
+				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
+					break;
 			}
-			if (flag == 1)
-			{
-				num = _atoi(tokens[1]);
-				if (num == -1)
-					return (-1);
-			}
+		}
+		if (flag == 1)
+		{
+			num = _atoi(tokens[1]);
+			if (num == -1)
+				return (-1);
 		}
 	}
 	return (num);
@@ -36,7 +40,7 @@ int exit_handler(char **tokens)
  *
  * Return: the int converted from the string
  */
-int _atoi(const char *s)
+int _atoi(char *s)
 {
 	int i, d, n, len, f, digit;
 

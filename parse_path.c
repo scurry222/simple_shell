@@ -34,7 +34,7 @@ char **get_env(char *name)
 * path_finder - connect dirs in PATH with inputted command, check if executable
 * @s: input, in form array of strings
 *
-* Return: concat'ed string 
+* Return: concatenated string
 */
 
 char *path_finder(char **s)

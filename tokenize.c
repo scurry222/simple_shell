@@ -1,6 +1,12 @@
-#include <stdlib.h>
 #include "shell.h"
 
+/**
+ * wordcount - counts words in a string for _strtok
+ * @str: string to tokenize
+ * @delim: delimeter between tokens
+ *
+ * Return: number of words
+ */
 int wordcount(char *str, char delim)
 {
 	int num = 0, i;
@@ -20,10 +26,11 @@ int wordcount(char *str, char delim)
 }
 
 /**
-* strtow - convert input str into a double string
+* _strtok - converts a string into tokens
 * @str: string to separate
+* @delim: delimeter between tokens
 *
-* Return: double pointer to the words on success, null if fail
+* Return: pointer to the array of strings, or NULL if fail
 */
 
 char **_strtok(char *str, char delim)
@@ -108,15 +115,13 @@ char **strtow(char *str)
 	char **matrix = NULL, *tmp = NULL;
 	int i, k = 0, len = 0, words, c = 0, start, end;
 
-	while (*(str + len))
-		len++;
+	len = _strlen(str);
 	words = count_word(str);
 	if (words == 0)
 	{
 		free(str);
 		return (NULL);
 	}
-
 	matrix = malloc(sizeof(char *) * (words + 1));
 	if (matrix == NULL)
 	{
@@ -145,8 +150,6 @@ char **strtow(char *str)
 		else if (c++ == 0)
 			start = i;
 	}
-
 	matrix[k] = NULL;
-
 	return (matrix);
 }

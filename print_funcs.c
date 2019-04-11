@@ -12,6 +12,12 @@ int _putchar(char c)
 	return (write(1, &c, 1));
 }
 
+/**
+ * print_error - prints a custom error message
+ * @i: index of the command in history
+ * @s: name of the program
+ * @argv: array of arguments from the command line
+ */
 void print_error(int i, char *s, char **argv)
 {
 	char *buf = _strcat(s, ": ");
@@ -35,12 +41,15 @@ void print_error(int i, char *s, char **argv)
 void print_prompt(void)
 {
 	char *s = "$ ";
+
 	write(2, s, 2);
 }
 
 /**
  * print_env - replicates the bash env function
  * @av: array of arguments from the command line
+ *
+ * Return: 0 on success, -1 on error
  */
 int print_env(char **av)
 {

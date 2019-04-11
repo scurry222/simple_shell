@@ -30,12 +30,12 @@ int _strcmp(char *s1, char *s2)
  */
 int _strlen(char *s)
 {
-        unsigned int len = 0;
+	unsigned int len = 0;
 
-        while (s[len])
-                len++;
+	while (s[len])
+		len++;
 
-        return (len);
+	return (len);
 }
 
 /**
@@ -109,35 +109,6 @@ char *_strcat(char *dest, char *src)
 	return (dest);
 }
 
-/**
- * *_strdup - copies the string given as parameter
- * @str: string to duplicate
- *
- * Return: pointer to the copied string (Success), NULL (Error)
- */
-char *_strdup(char *str)
-{
-	char *dup;
-	int c, i = 0;
-
-	if (!str)
-		return (NULL);
-
-	while (str[i])
-		i++;
-
-	dup = malloc(sizeof(char) * i + 1);
-
-	if (!dup)
-		return (NULL);
-
-	for (c = 0; c < i; c++)
-		dup[c] = str[c];
-
-	dup[c] = '\0';
-
-	return (dup);
-}
 /**
  * convert - converts number and base into string
  * @num: input number
