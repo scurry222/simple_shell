@@ -51,12 +51,13 @@ void print_prompt(void)
  */
 void print_error_env(char **argv)
 {
-	char *buf = str_concat(argv[0], ": ");
+	static char *buf;
+	
+	buf = str_concat(argv[0], ": ");
 
-	buf = str_concat(buf, argv[1]);
-	buf = str_concat(buf, ": No such file or directory\n");
+	buf = _strcat(buf, argv[1]);
+	buf = _strcat(buf, ": No such file or directory\n");
 	write(2, buf, _strlen(buf));
-	free(buf);
 }
 
 /**
@@ -67,15 +68,16 @@ void print_error_env(char **argv)
  */
 void print_error_exit(int i, char *s, char **argv)
 {
-	char *buf = str_concat(s, ": ");
+	static char *buf;
+	
+	buf = _strcat(s, ": ");
 	char *number = convert(i, 10);
 
-	buf = str_concat(buf, number);
-	buf = str_concat(buf, ": ");
-	buf = str_concat(buf, argv[0]);
-	buf = str_concat(buf, ": Illegal number: ");
-	buf = str_concat(buf, argv[1]);
-	buf = str_concat(buf, "\n");
+	buf = _strcat(buf, number);
+	buf = _strcat(buf, ": ");
+	buf = _strcat(buf, argv[0]);
+	buf = _strcat(buf, ": Illegal number: ");
+	buf = _strcat(buf, argv[1]);
+	buf = _strcat(buf, "\n");
 	write(2, buf, _strlen(buf));
-	free(buf);
 }

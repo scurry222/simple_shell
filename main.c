@@ -54,6 +54,10 @@ void exec(char **argv, char *s, int i)
 	free_everything(argv);
 }
 
+/**
+ * sigint_handler - doesn't exit in case of Ctrl-C
+ * @sig: signal
+ */
 void sigint_handler(int sig)
 {
 	(void)sig;
@@ -106,10 +110,11 @@ int main(int ac, char *av[])
 			if (m == -1)
 			{
 				print_error_exit(i, av[0], argv);
-			//	free(ch);
+				free(ch);
 			}
 			else
 			{
+				free(ch);
 				free_everything(argv);
 				exit(m);
 			}
