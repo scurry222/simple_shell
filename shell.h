@@ -17,6 +17,7 @@ extern char **environ;
 
 /* main.c */
 void exec(char **argv, char *s, int i);
+void sigint_handler(int sig);
 
 /* print_funcs.c */
 int _putchar(char c);

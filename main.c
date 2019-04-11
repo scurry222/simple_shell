@@ -54,11 +54,14 @@ void exec(char **argv, char *s, int i)
 	free_everything(argv);
 }
 
-/*sighandler_t sigint_handler(int sig)
+void sigint_handler(int sig)
 {
+	(void)sig;
 	signal(SIGINT, sigint_handler);
+	_putchar('\n');
+	print_prompt();
 	fflush(stdout);
-}*/
+}
 
 /**
  * main - simple command-line argument interpreter
@@ -79,7 +82,7 @@ int main(int ac, char *av[])
 	char **argv = NULL;
 	(void)ac;
 		
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
 
 	while (1)
 	{
