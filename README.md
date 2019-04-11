@@ -7,7 +7,7 @@ Simple Shell is a command line interpreter that replicates the **sh** program.
 What we learned:
 * How a shell works and finds commands
 * Creating, forking and working with processes
-* Executing another program from a program
+* Executing a program from another program
 * Pair programming and team work
 * Building a test suite to check our own code
 
@@ -55,9 +55,11 @@ File | Content
 [shell.h](./shell.h) | function protoypes, standard libraries
 [print_funcs.c](./print_funcs.c) | printing functions
 [string_funcs.c](./string_funcs.c) | string-handling functions
-[strtow.c](./strtow.c) | string to word parsing function
+[tokenize.c](./tokenize.c) | string to word parsing function
 [parse_path.c](./parse_path.c) | functions that check the PATH for commands
+[builtins.c](./builtins.c) | functions dealing with the shell builtins
 [free.c](./free.c) | memory-handling functions
+[man_1_simple_shell](./man_1_simple_shell) | Simple Shell man page (```man ./man_1_simple_shell```)
 
 ## Authors
 
