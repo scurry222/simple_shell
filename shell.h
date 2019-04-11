@@ -20,9 +20,10 @@ void exec(char **argv, char *s, int i);
 
 /* print_funcs.c */
 int _putchar(char c);
-int print_env(char **av);
 void print_prompt(void);
 void print_error(int i, char *s, char **argv);
+void print_error_env(char **argv);
+void print_error_exit(int i, char *s, char **argv);
 
 /* string_funcs.c */
 int _strcmp(char *s1, char *s2);
@@ -46,6 +47,7 @@ void free_everything(char **args);
 
 /* builtins.c */
 long long int exit_handler(char **tokens);
+int print_env(char **av);
 long long int _atoi(char *s);
 char *_strstr(char *haystack, char *needle);
 

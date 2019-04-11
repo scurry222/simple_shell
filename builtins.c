@@ -21,7 +21,7 @@ long long int exit_handler(char **tokens)
 			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
 			{
 				flag = 1;
-				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9' || tokens[1][i + 1] == '\n')
+				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
 					break;
 			}
 			flag = 0;
@@ -31,6 +31,29 @@ long long int exit_handler(char **tokens)
 			num = _atoi(tokens[1]);
 			return (num);
 		}
+	}
+	return (-1);
+}
+
+/**
+ * print_env - replicates the bash env function
+ * @av: array of arguments from the command line
+ *
+ * Return: 0 on success, -1 on error
+ */
+int print_env(char **av)
+{
+	int i, j;
+
+	if (_strcmp(av[0], "env") == 0 && av[1] == NULL)
+	{
+		for (i = 0; environ[i]; i++)
+		{
+			for (j = 0; environ[i][j]; j++)
+				_putchar(environ[i][j]);
+			_putchar('\n');
+		}
+		return (0);
 	}
 	return (-1);
 }

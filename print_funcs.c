@@ -46,24 +46,36 @@ void print_prompt(void)
 }
 
 /**
- * print_env - replicates the bash env function
- * @av: array of arguments from the command line
- *
- * Return: 0 on success, -1 on error
+ * print_error_env - prints a custom error message for env builtin
+ * @argv: array of arguments from the command line
  */
-int print_env(char **av)
+void print_error_env(char **argv)
 {
-	int i, j;
+	char *buf = str_concat(argv[0], ": ");
 
-	if (_strcmp(av[0], "env") == 0 && av[1] == NULL)
-	{
-		for (i = 0; environ[i]; i++)
-		{
-			for (j = 0; environ[i][j]; j++)
-				_putchar(environ[i][j]);
-			_putchar('\n');
-		}
-		return (0);
-	}
-	return (-1);
+	buf = str_concat(buf, argv[1]);
+	buf = str_concat(buf, ": No such file or directory\n");
+	write(2, buf, _strlen(buf));
+	free(buf);
+}
+
+/**
+ * print_error_exit - prints a custom error message for exit builtin
+ * @i: index of the command in history
+ * @s: name of the program
+ * @argv: array of arguments from the command line
+ */
+void print_error_exit(int i, char *s, char **argv)
+{
+	char *buf = str_concat(s, ": ");
+	char *number = convert(i, 10);
+
+	buf = str_concat(buf, number);
+	buf = str_concat(buf, ": ");
+	buf = str_concat(buf, argv[0]);
+	buf = str_concat(buf, ": Illegal number: ");
+	buf = str_concat(buf, argv[1]);
+	buf = str_concat(buf, "\n");
+	write(2, buf, _strlen(buf));
+	free(buf);
 }

@@ -94,24 +94,28 @@ int main(int ac, char *av[])
 			m = exit_handler(argv);
 			if (m == -1)
 			{
-				perror("./shell");
-				continue;
+				print_error_exit(i, av[0], argv);
+			//	free(ch);
 			}
 			else
 			{
 				free_everything(argv);
 				exit(m);
 			}
+			free_everything(argv);
+			i++;
+			continue;
 		}
 		if (_strstr(ch, "env"))
 		{
 			n = print_env(argv);
 			if (n == -1)
 			{
-				print_error(i, av[0], argv);
+				print_error_env(argv);
 				free(ch);
 			}
 			free_everything(argv);
+			i++;
 			continue;
 		}
 		exec(argv, av[0], i);
