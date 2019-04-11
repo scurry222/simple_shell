@@ -7,9 +7,10 @@
  * Return: 0 if there are no arguments,
  * -1 on failure, or the value of the argument
  */
-int exit_handler(char **tokens)
+long long int exit_handler(char **tokens)
 {
-	int flag = 0, i, num = 0;
+	int flag = 0, i;
+	long long int num = 0;
 
 	if (_strcmp(tokens[0], "exit") == 0)
 	{
@@ -20,18 +21,18 @@ int exit_handler(char **tokens)
 			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
 			{
 				flag = 1;
-				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
+				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9' || tokens[1][i + 1] == '\n')
 					break;
 			}
+			flag = 0;
 		}
 		if (flag == 1)
 		{
 			num = _atoi(tokens[1]);
-			if (num == -1)
-				return (-1);
+			return (num);
 		}
 	}
-	return (num);
+	return (-1);
 }
 
 /**
@@ -40,30 +41,25 @@ int exit_handler(char **tokens)
  *
  * Return: the int converted from the string
  */
-int _atoi(char *s)
+long long int _atoi(char *s)
 {
-	int i, d, n, len, f, digit;
+	int i, len, f, digit;
+	long long int n;
 
 	i = 0;
-	d = 0;
 	n = 0;
-	len = 0;
+	len = _strlen(s);
 	f = 0;
 	digit = 0;
-
-	while (s[len] != '\0')
-		len++;
 
 	while (i < len && f == 0)
 	{
 		if (s[i] == '-')
-			++d;
+			return (-1);
 
 		if (s[i] >= '0' && s[i] <= '9')
 		{
 			digit = s[i] - '0';
-			if (d % 2)
-				digit = -digit;
 			n = n * 10 + digit;
 			f = 1;
 			if (s[i + 1] < '0' || s[i + 1] > '9')

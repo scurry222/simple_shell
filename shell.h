@@ -45,8 +45,8 @@ char **_strtok(char *str, char delim);
 void free_everything(char **args);
 
 /* builtins.c */
-int exit_handler(char **tokens);
-int _atoi(char *s);
+long long int exit_handler(char **tokens);
+long long int _atoi(char *s);
 char *_strstr(char *haystack, char *needle);
 
 #endif

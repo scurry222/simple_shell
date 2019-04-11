@@ -29,6 +29,7 @@ void exec(char **argv, char *s, int i)
 		{
 			if (argv[0])
 			{
+				//printf("about to execute %s\n", argv[0]);
 				if (execve(argv[0], argv, environ) == -1)
 				{
 					print_error(i, s, argv);
@@ -66,7 +67,8 @@ int main(int ac, char *av[])
 {
 	size_t len = 0;
 	int i = 1;
-	int get, n, m;
+	int get, n;
+	long long int m;
 	char *ch = NULL;
 	char **argv = NULL;
 	(void)ac;
@@ -93,13 +95,11 @@ int main(int ac, char *av[])
 			if (m == -1)
 			{
 				perror("./shell");
-				free(ch);
 				continue;
 			}
 			else
 			{
 				free_everything(argv);
-				free(ch);
 				exit(m);
 			}
 		}
