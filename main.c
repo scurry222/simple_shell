@@ -54,6 +54,12 @@ void exec(char **argv, char *s, int i)
 	free_everything(argv);
 }
 
+/*sighandler_t sigint_handler(int sig)
+{
+	signal(SIGINT, sigint_handler);
+	fflush(stdout);
+}*/
+
 /**
  * main - simple command-line argument interpreter
  * Description: prints a prompt and waits for the user to input a command,
@@ -72,6 +78,8 @@ int main(int ac, char *av[])
 	char *ch = NULL;
 	char **argv = NULL;
 	(void)ac;
+		
+	signal(SIGINT, SIG_IGN);
 
 	while (1)
 	{
