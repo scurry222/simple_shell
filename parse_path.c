@@ -24,10 +24,7 @@ char **get_env(char *name)
 			return (value);
 		}
 		else
-		{
 			free_everything(path);
-			free_everything(value);
-		}
 	}
 	free_everything(path);
 	free_everything(value);
@@ -65,7 +62,7 @@ char *path_finder(char **s)
 			return (prog);
 		}
 		free(dir);
-		free(prog);	
+		free(prog);
 	}
 	free_everything(path_value);
 	return (NULL);
