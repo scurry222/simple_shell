@@ -93,6 +93,7 @@ int env_handler(char **av)
 
 	if (_strcmp(av[0], "env") == 0 && av[1] == NULL)
 	{
+		printf("go in no area\n");
 		for (i = 0; environ[i]; i++)
 		{
 			for (j = 0; environ[i][j]; j++)

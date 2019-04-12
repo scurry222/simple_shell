@@ -43,6 +43,7 @@ char **_strtok(char *str, char delim);
 /* helper_funcs.c */
 void free_everything(char **args);
 void sigint_handler(int sig);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 /* builtins.c */
 int is_builtin(char *line, char *prog_name, char **argv, int *i);
