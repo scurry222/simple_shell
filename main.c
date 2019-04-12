@@ -8,7 +8,7 @@
 *
 * Return: void
 */
-void exec(char **argv, char *s, int i)
+void exec(char **argv, char *s, int *i)
 {
 	int status;
 	char *exe = NULL;
@@ -19,7 +19,7 @@ void exec(char **argv, char *s, int i)
 	{
 		perror(s);
 		free_everything(argv);
-		return;
+		exit(EXIT_SUCCESS);
 	}
 	if (child_pid == 0)
 	{
@@ -32,7 +32,7 @@ void exec(char **argv, char *s, int i)
 				{
 					print_error(i, s, argv);
 					free_everything(argv);
-					return;
+					exit(EXIT_SUCCESS);
 				}
 				free_everything(argv);
 			}
@@ -42,7 +42,7 @@ void exec(char **argv, char *s, int i)
 			print_error(i, s, argv);
 			free(exe);
 			free_everything(argv);
-			return;
+			exit(EXIT_SUCCESS);
 		}
 	}
 	else
@@ -77,8 +77,7 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
-			free(line);
-			return (0);
+			break;
 		}
 		if (_strcmp(line, "\n") == 0)
 			continue;
@@ -86,7 +85,7 @@ int main(int ac, char *av[])
 		argv = _strtok(line, ' ');
 		if (is_builtin(line, prog_name, argv, &i))
 			continue;
-		exec(argv, prog_name, i);
+		exec(argv, prog_name, &i);
 		i++;
 		continue;
 	}

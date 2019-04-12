@@ -16,12 +16,12 @@
 extern char **environ;
 
 /* main.c */
-void exec(char **argv, char *s, int i);
+void exec(char **argv, char *s, int *i);
 
 /* print_funcs.c */
 int _putchar(char c);
 void print_prompt(void);
-void print_error(int i, char *s, char **argv);
+void print_error(int *i, char *s, char **argv);
 void print_error_env(char **argv);
 void print_error_exit(int *i, char *s, char **argv);
 

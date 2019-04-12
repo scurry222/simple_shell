@@ -51,8 +51,8 @@ long long int _atoi(char *s)
  */
 char *convert(int num, int base)
 {
-        char *rep = "0123456789";
-        char buffer[50];
+        static char *rep = "0123456789";
+        static char buffer[50];
         char *ptr;
 
         ptr = &buffer[49];

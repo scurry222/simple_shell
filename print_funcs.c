@@ -13,15 +13,25 @@ int _putchar(char c)
 }
 
 /**
+ * print_prompt - prints a prompt for the shell
+ */
+void print_prompt(void)
+{
+        char *s = "$ ";
+
+        write(2, s, 2);
+}
+
+/**
  * print_error - prints a custom error message
  * @i: index of the command in history
  * @s: name of the program
  * @argv: array of arguments from the command line
  */
-void print_error(int i, char *s, char **argv)
+void print_error(int *i, char *s, char **argv)
 {
-	static char *buf; 
-	char *number = convert(i, 10);
+	static char *buf;
+	char *number = convert(*i, 10);
 
 	buf = _strcat(s, ": ");
 	if (errno == ENOENT || errno == ENOTDIR)
@@ -35,16 +45,6 @@ void print_error(int i, char *s, char **argv)
 	else
 		perror(s);
 	buf[0] = '\0';
-}
-
-/**
- * print_prompt - prints a prompt for the shell
- */
-void print_prompt(void)
-{
-	char *s = "$ ";
-
-	write(2, s, 2);
 }
 
 /**
