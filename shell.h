@@ -35,6 +35,7 @@ int _strncmp(char *s1, char *s2, unsigned int n);
 /* path_finder.c */
 char **get_env(char *name);
 char *path_finder(char **s);
+char *get_env_val(char *name);
 
 /* tokenize.c */
 int wordcount(char *str, char delim);

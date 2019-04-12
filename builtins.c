@@ -66,10 +66,13 @@ long long int exit_handler(char **tokens)
 		{
 			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
 			{
+				printf("token at [1][i] - %c\n", tokens[1][i]);
 				flag = 1;
 				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
 					break;
 			}
+			else
+				break;
 			flag = 0;
 		}
 		if (flag == 1)
