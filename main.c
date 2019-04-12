@@ -84,6 +84,7 @@ int main(int ac, char *av[])
 	long long int m;
 	char *ch = NULL;
 	char **argv = NULL;
+	char *prog_name = av[0];
 	(void)ac;
 		
 	signal(SIGINT, sigint_handler);
@@ -103,14 +104,14 @@ int main(int ac, char *av[])
 		if (_strcmp(ch, "\n") == 0)
 			continue;
 		ch[get - 1] = '\0';
-		argv = strtow(ch);
+		argv = _strtok(ch, ' ');
 		if (_strstr(ch, "exit"))
 		{
 			m = exit_handler(argv);
 			if (m == -1)
 			{
-				print_error_exit(i, av[0], argv);
-				free(ch);
+				print_error_exit(i, prog_name, argv);
+				//free(ch);
 			}
 			else
 			{
@@ -134,7 +135,7 @@ int main(int ac, char *av[])
 			i++;
 			continue;
 		}
-		exec(argv, av[0], i);
+		exec(argv, prog_name, i);
 		i++;
 		continue;
 	}

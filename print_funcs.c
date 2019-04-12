@@ -20,9 +20,10 @@ int _putchar(char c)
  */
 void print_error(int i, char *s, char **argv)
 {
-	char *buf = _strcat(s, ": ");
+	char *buf; 
 	char *number = convert(i, 10);
 
+	buf = _strcat(s, ": ");
 	if (errno == ENOENT || errno == ENOTDIR)
 	{
 		buf = _strcat(buf, number);
@@ -33,6 +34,7 @@ void print_error(int i, char *s, char **argv)
 	}
 	else
 		perror(s);
+	*buf = '\0';
 }
 
 /**
@@ -51,13 +53,14 @@ void print_prompt(void)
  */
 void print_error_env(char **argv)
 {
-	static char *buf;
+	char *buf;
 	
-	buf = str_concat(argv[0], ": ");
+	buf = _strcat(argv[0], ": ");
 
 	buf = _strcat(buf, argv[1]);
 	buf = _strcat(buf, ": No such file or directory\n");
 	write(2, buf, _strlen(buf));
+	*buf = '\0';
 }
 
 /**
@@ -68,7 +71,7 @@ void print_error_env(char **argv)
  */
 void print_error_exit(int i, char *s, char **argv)
 {
-	static char *buf;
+	char *buf;
 	
 	buf = _strcat(s, ": ");
 	char *number = convert(i, 10);
@@ -80,4 +83,5 @@ void print_error_exit(int i, char *s, char **argv)
 	buf = _strcat(buf, argv[1]);
 	buf = _strcat(buf, "\n");
 	write(2, buf, _strlen(buf));
+	*buf = '\0';
 }
