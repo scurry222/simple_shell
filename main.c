@@ -77,7 +77,8 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
-			break;
+			free(line);
+			return (0);
 		}
 		if (_strcmp(line, "\n") == 0)
 			continue;
