@@ -8,7 +8,6 @@
 *
 * Return: void
 */
-
 void exec(char **argv, char *s, int i)
 {
 	int status;
@@ -20,7 +19,7 @@ void exec(char **argv, char *s, int i)
 	{
 		perror(s);
 		free_everything(argv);
-		exit(1);
+		return;
 	}
 	if (child_pid == 0)
 	{
@@ -29,12 +28,11 @@ void exec(char **argv, char *s, int i)
 		{
 			if (argv[0])
 			{
-				//printf("about to execute %s\n", argv[0]);
 				if (execve(argv[0], argv, environ) == -1)
 				{
 					print_error(i, s, argv);
 					free_everything(argv);
-					exit(1);
+					return;
 				}
 				free_everything(argv);
 			}
@@ -44,27 +42,12 @@ void exec(char **argv, char *s, int i)
 			print_error(i, s, argv);
 			free(exe);
 			free_everything(argv);
-			exit(1);
+			return;
 		}
 	}
 	else
-	{
 		wait(&status);
-	}
 	free_everything(argv);
-}
-
-/**
- * sigint_handler - doesn't exit in case of Ctrl-C
- * @sig: signal
- */
-void sigint_handler(int sig)
-{
-	(void)sig;
-	signal(SIGINT, sigint_handler);
-	_putchar('\n');
-	print_prompt();
-	fflush(stdout);
 }
 
 /**
@@ -79,12 +62,8 @@ void sigint_handler(int sig)
 int main(int ac, char *av[])
 {
 	size_t len = 0;
-	int i = 1;
-	int get, n;
-	long long int m;
-	char *ch = NULL;
-	char **argv = NULL;
-	char *prog_name = av[0];
+	int i = 1, get;
+	char **argv = NULL, *line = NULL, *prog_name = av[0];
 	(void)ac;
 		
 	signal(SIGINT, sigint_handler);
@@ -93,52 +72,24 @@ int main(int ac, char *av[])
 	{
 		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 			print_prompt();
-		get = getline(&ch, &len, stdin);
+		get = getline(&line, &len, stdin);
 		if (get < 0)
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
-				putchar('\n');
-			free(ch);
+				_putchar('\n');
+			free(line);
 			return (0);
 		}
-		if (_strcmp(ch, "\n") == 0)
+		if (_strcmp(line, "\n") == 0)
 			continue;
-		ch[get - 1] = '\0';
-		argv = _strtok(ch, ' ');
-		if (_strstr(ch, "exit"))
-		{
-			m = exit_handler(argv);
-			if (m == -1)
-			{
-				print_error_exit(i, prog_name, argv);
-				//free(ch);
-			}
-			else
-			{
-				free(ch);
-				free_everything(argv);
-				exit(m);
-			}
-			free_everything(argv);
-			i++;
+		line[get - 1] = '\0';
+		argv = _strtok(line, ' ');
+		if (is_builtin(line, prog_name, argv, &i))
 			continue;
-		}
-		if (_strstr(ch, "env"))
-		{
-			n = print_env(argv);
-			if (n == -1)
-			{
-				print_error_env(argv);
-				free(ch);
-			}
-			free_everything(argv);
-			i++;
-			continue;
-		}
 		exec(argv, prog_name, i);
 		i++;
 		continue;
 	}
-	free(ch);
+	free(line);
 	return (0);
 }

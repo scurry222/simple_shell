@@ -1,6 +1,52 @@
 #include "shell.h"
 
 /**
+ * is_builtin - checks if the command is a builtin
+ * @line: input line
+ * @prog_name: name of the program
+ * @argv: parsed command line
+ * @i: pointer to the increment variable of main
+ *
+ * Return: 1 if yes, 0 if no
+ */
+int is_builtin(char *line, char *prog_name, char **argv, int *i)
+{
+	int n;
+	long long int m;
+
+	if (_strstr(line, "exit"))
+        {
+		m = exit_handler(argv);
+		if (m == -1)
+		{
+			print_error_exit(i, prog_name, argv);
+			//free(line);
+		}
+		else
+		{
+			free(line);
+			free_everything(argv);
+			exit(m);
+		}
+		free_everything(argv);
+		*i = *i + 1;
+		return (1);
+	}
+	if (_strstr(line, "env"))
+	{
+		n = env_handler(argv);
+		if (n == -1)
+		{
+			print_error_env(argv);
+			free(line);
+		}
+		free_everything(argv);
+		*i = *i + 1;
+		return (1);
+	}
+	return (0);
+}
+/**
  * exit_handler - handles the builtin exit with arguments
  * @tokens: array of strings from the command line
  *
@@ -41,7 +87,7 @@ long long int exit_handler(char **tokens)
  *
  * Return: 0 on success, -1 on error
  */
-int print_env(char **av)
+int env_handler(char **av)
 {
 	int i, j;
 
@@ -58,70 +104,3 @@ int print_env(char **av)
 	return (-1);
 }
 
-/**
- * _atoi - converts a string to an integer
- * @s: string to be converted
- *
- * Return: the int converted from the string
- */
-long long int _atoi(char *s)
-{
-	int i, len, f, digit;
-	long long int n;
-
-	i = 0;
-	n = 0;
-	len = _strlen(s);
-	f = 0;
-	digit = 0;
-
-	while (i < len && f == 0)
-	{
-		if (s[i] == '-')
-			return (-1);
-
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			digit = s[i] - '0';
-			n = n * 10 + digit;
-			f = 1;
-			if (s[i + 1] < '0' || s[i + 1] > '9')
-				break;
-			f = 0;
-		}
-		i++;
-	}
-
-	if (f == 0)
-		return (0);
-
-	if (n > INT_MAX || n < 0)
-		return (-1);
-
-	return (n);
-}
-
-/**
- * *_strstr - locates a substring
- * @haystack: string to search in
- * @needle: substring to look for
- *
- * Return: pointer to the beginning of the located substring
- * or NULL if the substring is not found
- */
-char *_strstr(char *haystack, char *needle)
-{
-	int i, j;
-
-	for (i = 0; haystack[i] != '\0'; i++)
-	{
-		for (j = 0; needle[j] != '\0'; j++)
-		{
-			if (haystack[i + j] != needle[j])
-				break;
-		}
-		if (!needle[j])
-			return (&haystack[i]);
-	}
-	return (NULL);
-}

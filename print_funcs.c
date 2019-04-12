@@ -20,7 +20,7 @@ int _putchar(char c)
  */
 void print_error(int i, char *s, char **argv)
 {
-	char *buf; 
+	static char *buf; 
 	char *number = convert(i, 10);
 
 	buf = _strcat(s, ": ");
@@ -34,7 +34,7 @@ void print_error(int i, char *s, char **argv)
 	}
 	else
 		perror(s);
-	*buf = '\0';
+	buf[0] = '\0';
 }
 
 /**
@@ -53,14 +53,14 @@ void print_prompt(void)
  */
 void print_error_env(char **argv)
 {
-	char *buf;
+	static char *buf;
 	
 	buf = _strcat(argv[0], ": ");
 
 	buf = _strcat(buf, argv[1]);
 	buf = _strcat(buf, ": No such file or directory\n");
 	write(2, buf, _strlen(buf));
-	*buf = '\0';
+	buf[0] = '\0';
 }
 
 /**
@@ -69,12 +69,12 @@ void print_error_env(char **argv)
  * @s: name of the program
  * @argv: array of arguments from the command line
  */
-void print_error_exit(int i, char *s, char **argv)
+void print_error_exit(int *i, char *s, char **argv)
 {
-	char *buf;
+	static char *buf;
 	
 	buf = _strcat(s, ": ");
-	char *number = convert(i, 10);
+	char *number = convert(*i, 10);
 
 	buf = _strcat(buf, number);
 	buf = _strcat(buf, ": ");
@@ -83,5 +83,5 @@ void print_error_exit(int i, char *s, char **argv)
 	buf = _strcat(buf, argv[1]);
 	buf = _strcat(buf, "\n");
 	write(2, buf, _strlen(buf));
-	*buf = '\0';
+	buf[0] = '\0';
 }
