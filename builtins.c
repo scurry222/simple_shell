@@ -20,7 +20,6 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 		if (m == -1)
 		{
 			print_error_exit(i, prog_name, argv);
-			//free(line);
 		}
 		else
 		{
@@ -32,13 +31,12 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 		*i = *i + 1;
 		return (1);
 	}
-	if (_strstr(line, "env"))
+	if (_strcmp(line, "env") == 0)
 	{
 		n = env_handler(argv);
 		if (n == -1)
 		{
 			print_error_env(argv);
-			free(line);
 		}
 		free_everything(argv);
 		*i = *i + 1;
@@ -66,7 +64,6 @@ long long int exit_handler(char **tokens)
 		{
 			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
 			{
-				printf("token at [1][i] - %c\n", tokens[1][i]);
 				flag = 1;
 				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
 					break;
@@ -94,9 +91,8 @@ int env_handler(char **av)
 {
 	int i, j;
 
-	if (_strcmp(av[0], "env") == 0 && av[1] == NULL)
+	if (av[1] == NULL)
 	{
-		printf("go in no area\n");
 		for (i = 0; environ[i]; i++)
 		{
 			for (j = 0; environ[i][j]; j++)

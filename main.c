@@ -35,6 +35,7 @@ int exec(char **argv, char *s, int *i)
 				{
 					print_error(i, s, argv);
 					free_everything(argv);
+					//exit(EXIT_SUCCESS);
 					return (0);
 				}
 				free_everything(argv);
