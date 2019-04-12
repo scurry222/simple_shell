@@ -16,7 +16,7 @@
 extern char **environ;
 
 /* main.c */
-void exec(char **argv, char *s, int *i);
+int exec(char **argv, char *s, int *i);
 
 /* print_funcs.c */
 int _putchar(char c);
@@ -28,9 +28,9 @@ void print_error_exit(int *i, char *s, char **argv);
 /* string_funcs.c */
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
-char *_strcat(char *dest, char *src);
 char *str_concat(char *s1, char *s2);
 char *_strstr(char *haystack, char *needle);
+int _strncmp(char *s1, char *s2, unsigned int n);
 
 /* path_finder.c */
 char **get_env(char *name);

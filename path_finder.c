@@ -1,5 +1,18 @@
 #include "shell.h"
 
+char *get_env_val(char *name)
+{
+	char **env = NULL;
+	int i;
+
+	env = environ;
+
+	for (i = 0; env[i]; i++)
+		if (_strncmp(env[i], name, strlen(name)) == 0)
+			return (env[i] + _strlen(name));
+	return (NULL);
+}
+
 /**
 * get_env - access environment to get value at passed in name
 * @name: key (key=value) to select in env
@@ -45,7 +58,8 @@ char *path_finder(char **s)
 	char **path_value = NULL;
 
 	path_value = get_env("PATH");
-	if (path_value[0][0] != '/' || !path_value)
+
+	if (!path_value)
 	{
 		free_everything(path_value);
 		return (NULL);
@@ -55,6 +69,7 @@ char *path_finder(char **s)
 	{
 		dir = str_concat(path_value[i], "/");
 		prog = str_concat(dir, s[0]);
+
 		if (access(prog, X_OK) == 0)
 		{
 			free_everything(path_value);

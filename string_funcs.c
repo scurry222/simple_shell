@@ -86,29 +86,23 @@ char *str_concat(char *s1, char *s2)
 	return (s3);
 }
 
-/**
-* _strcat - concatenate two strings
-* @dest: destination for resulting string
-* @src: souce string to cat to dest
-*
-* Return: destination string
-*/
-
-char *_strcat(char *dest, char *src)
+int _strncmp(char *s1, char *s2, unsigned int n)
 {
-	int i;
-	int j;
+	unsigned int i = 0;
 
-	for (i = 0; dest[i]; i++)
-		;
-
-	for (j = 0; src[j]; j++)
-		dest[i + j] = src[j];
-
-	dest[i + j] = '\0';
-
-	return (dest);
+	while (*s1 == *s2 && i < n)
+	{
+		if (*s1 == '\0')
+		{
+			return (0);
+		}
+		s1++;
+		s2++;
+		i++;
+	}
+	return (i != n);
 }
+
 
 /**
  * *_strstr - locates a substring

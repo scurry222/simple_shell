@@ -8,13 +8,13 @@
 *
 * Return: void
 */
-void exec(char **argv, char *s, int *i)
+int exec(char **argv, char *s, int *i)
 {
 	int status;
 	char *exe = NULL;
+	pid_t child_pid;
 
-	pid_t child_pid = fork();
-
+	child_pid = fork();
 	if (child_pid == -1)
 	{
 		perror(s);
@@ -23,6 +23,9 @@ void exec(char **argv, char *s, int *i)
 	}
 	if (child_pid == 0)
 	{
+		if (get_env_val("PATH=")[0] != '/')
+			execve(argv[0], argv, environ);
+		
 		exe = path_finder(argv);
 		if (!exe)
 		{
@@ -32,11 +35,12 @@ void exec(char **argv, char *s, int *i)
 				{
 					print_error(i, s, argv);
 					free_everything(argv);
-					exit(EXIT_SUCCESS);
+					return (0);
 				}
 				free_everything(argv);
 			}
 		}
+
 		if (execve(exe, argv, environ) == -1)
 		{
 			print_error(i, s, argv);
@@ -48,6 +52,7 @@ void exec(char **argv, char *s, int *i)
 	else
 		wait(&status);
 	free_everything(argv);
+	return (1);
 }
 
 /**
@@ -86,7 +91,8 @@ int main(int ac, char *av[])
 		argv = _strtok(line, ' ');
 		if (is_builtin(line, prog_name, argv, &i))
 			continue;
-		exec(argv, prog_name, &i);
+		if (!exec(argv, prog_name, &i))
+			break;
 		i++;
 		continue;
 	}
