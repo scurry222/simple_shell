@@ -19,7 +19,7 @@
 * if child process was nut successful, wait
 * free the input
 *
-* Return: default exit code (0)
+* Return: return to main loop (1)
 */
 int exec(char **input, char *s, int *i)
 {
@@ -45,7 +45,7 @@ int exec(char **input, char *s, int *i)
 			{
 				print_error(i, s, input);
 				free_everything(input);
-				return (0);
+				exit(EXIT_SUCCESS);
 			}
 			free_everything(input);
 		}
@@ -60,7 +60,7 @@ int exec(char **input, char *s, int *i)
 	else
 		wait(&status);
 	free_everything(input);
-	return (0);
+	return (1);
 }
 
 /**
