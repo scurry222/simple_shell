@@ -5,7 +5,7 @@
 * @input: array of arguments from standard input
 * @s: name of the program
 * @i: index of error
-* 
+*
 * make child process
 * if fork failed, print error, free, and exit
 * if not failed,
@@ -14,7 +14,7 @@
 * set variable "exe" to resulting array of strings containing PATH value
 * if exe returned NULL but input is not NULL,
 * execute input. if failure, print error, free, and return error
-* else if exe did not return NULL, 
+* else if exe did not return NULL,
 * execute input. if failure, print error, free all, exit error
 * if child process was nut successful, wait
 * free the input
