@@ -14,7 +14,7 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 	int n;
 	long long int m;
 
-	if (_strstr(line, "exit"))
+	if (_strcmp(argv[0], "exit") == 0)		//if any arg is the string exit,
         {
 		m = exit_handler(argv);
 		if (m == -1)

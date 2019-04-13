@@ -10,7 +10,7 @@ void sigint_handler(int sig)
 	 signal(SIGINT, sigint_handler);
 	 _putchar('\n');
 	 print_prompt();
-	 fflush(stdout);
+	 fflush(stdout);	//why is important?
 }
 
 /**

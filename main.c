@@ -2,13 +2,13 @@
 
 /**
 * exec - handles execution of commands
-* @argv: array of arguments from standard input
+* @input: array of arguments from standard input
 * @s: name of the program
 * @i: index of error
 *
 * Return: void
 */
-int exec(char **argv, char *s, int *i)
+int exec(char **input, char *s, int *i)
 {
 	int status;
 	char *exe = NULL;
@@ -18,41 +18,41 @@ int exec(char **argv, char *s, int *i)
 	if (child_pid == -1)
 	{
 		perror(s);
-		free_everything(argv);
+		free_everything(input);
 		exit(EXIT_SUCCESS);
 	}
 	if (child_pid == 0)
 	{
 		if (get_env_val("PATH=")[0] != '/')
-			execve(argv[0], argv, environ);
+			execve(input[0], input, environ);
 		
-		exe = path_finder(argv);
+		exe = path_finder(input);
 		if (!exe)
 		{
-			if (argv[0])
+			if (input[0])
 			{
-				if (execve(argv[0], argv, environ) == -1)
+				if (execve(input[0], input, environ) == -1)
 				{
-					print_error(i, s, argv);
-					free_everything(argv);
+					print_error(i, s, input);
+					free_everything(input);
 					//exit(EXIT_SUCCESS);
 					return (0);
 				}
-				free_everything(argv);
+				free_everything(input);
 			}
 		}
 
-		if (execve(exe, argv, environ) == -1)
+		if (execve(exe, input, environ) == -1)
 		{
-			print_error(i, s, argv);
+			print_error(i, s, input);
 			free(exe);
-			free_everything(argv);
+			free_everything(input);
 			exit(EXIT_SUCCESS);
 		}
 	}
 	else
 		wait(&status);
-	free_everything(argv);
+	free_everything(input);
 	return (1);
 }
 
@@ -68,35 +68,36 @@ int exec(char **argv, char *s, int *i)
 int main(int ac, char *av[])
 {
 	size_t len = 0;
-	int i = 1, get;
-	char **argv = NULL, *line = NULL, *prog_name = av[0];
+	int cmd_count = 1, get;
+	char **input = NULL, *line = NULL, *prog_name = av[0];
 	(void)ac;
 		
-	signal(SIGINT, sigint_handler);
+	signal(SIGINT, sigint_handler);		//handles ctrl+C
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
+		
+		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)	//if this shell is running from a terminal
 			print_prompt();
-		get = getline(&line, &len, stdin);
-		if (get < 0)
+		get = getline(&line, &len, stdin);	//read from stdin, modify line str  to line from stdin
+		if (get < 0)	//if failure,
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
-				_putchar('\n');
+				_putchar('\n');		//newline for terminal user(error message?)
 			free(line);
-			return (0);
+			return (1);			//quit out of shell with error return
 		}
-		if (_strcmp(line, "\n") == 0)
+		if (_strcmp(line, "\n") == 0)		//if just enter is pressed
 			continue;
-		line[get - 1] = '\0';
-		argv = _strtok(line, ' ');
-		if (is_builtin(line, prog_name, argv, &i))
+		line[get - 1] = '\0';			//replace newline with null byte to remove it. could this have mem leak due to second null?
+		input = _strtok(line, ' ');		//break up inputted line into array of strings at space
+		if (is_builtin(line, prog_name, input, &cmd_count))	//is the first element a builtin?
 			continue;
-		if (!exec(argv, prog_name, &i))
+		if (!exec(input, prog_name, &cmd_count))			//if call to exec failed
 			break;
-		i++;
+		cmd_count++;						//count how many calls to the shell were made
 		continue;
 	}
-	free(line);
-	return (0);
+	free(line);					//free input
+	return (0);					//default exit code
 }

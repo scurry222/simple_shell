@@ -16,7 +16,7 @@
 extern char **environ;
 
 /* main.c */
-int exec(char **argv, char *s, int *i);
+int exec(char **input, char *s, int *i);
 
 /* print_funcs.c */
 int _putchar(char c);
