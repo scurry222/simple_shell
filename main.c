@@ -5,8 +5,21 @@
 * @input: array of arguments from standard input
 * @s: name of the program
 * @i: index of error
+* 
+* make child process
+* if fork failed, print error, free, and exit
+* if not failed,
+* if command can be run on its own without path,
+* execute command
+* set variable "exe" to resulting array of strings containing PATH value
+* if exe returned NULL but input is not NULL,
+* execute input. if failure, print error, free, and return error
+* else if exe did not return NULL, 
+* execute input. if failure, print error, free all, exit error
+* if child process was nut successful, wait
+* free the input
 *
-* Return: void
+* Return: default exit code (0)
 */
 int exec(char **input, char *s, int *i)
 {
@@ -47,7 +60,7 @@ int exec(char **input, char *s, int *i)
 	else
 		wait(&status);
 	free_everything(input);
-	return (1);
+	return (0);
 }
 
 /**
@@ -57,18 +70,18 @@ int exec(char **input, char *s, int *i)
  * @ac: number of arguments
  * @av: array of arguments
  *
- * handles ctrl+C
+ * signal: handles ctrl+C
  * if this shell is running from a terminal, print prompt
- * read from stdin, modify line str  to line from stdin
+ * read from stdin, modify variable "line" to line from stdin
  * if getline failed,
  * newline for terminal user(error message?)
  * quit out of shell with error return
- * if just enter is pressed
+ * increment count of how many calls to the shell were made
+ * if just enter is pressed, restart shell loop
  * replace newline with null byte to remove it. possible mem leak?
  * break up inputted line into array of strings at space
  * check if first element a builtin
  * if call to exec failed
- * count how many calls to the shell were made
  * free input
  *
  * Return: default exit code (0).
@@ -76,7 +89,7 @@ int exec(char **input, char *s, int *i)
 int main(int ac, char *av[])
 {
 	size_t len = 0;
-	int cmd_count = 1, get;
+	int cmd_count = 0, get;
 	char **input = NULL, *line = NULL, *prog_name = av[0];
 	(void)ac;
 
@@ -94,6 +107,7 @@ int main(int ac, char *av[])
 			free(line);
 			return (1);
 		}
+		cmd_count++;
 		if (_strcmp(line, "\n") == 0)
 			continue;
 		line[get - 1] = '\0';
@@ -102,7 +116,6 @@ int main(int ac, char *av[])
 			continue;
 		if (!exec(input, prog_name, &cmd_count))
 			break;
-		cmd_count++;
 		continue;
 	}
 	free(line);
