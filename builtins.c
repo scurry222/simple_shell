@@ -14,8 +14,8 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 	int n;
 	long long int m;
 
-	if (_strcmp(argv[0], "exit") == 0)		//if any arg is the string exit,
-        {
+	if (_strcmp(argv[0], "exit") == 0)  /* if any arg is the string exit, */
+	{
 		m = exit_handler(argv);
 		if (m == -1)
 		{
@@ -44,6 +44,7 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 	}
 	return (0);
 }
+
 /**
  * exit_handler - handles the builtin exit with arguments
  * @tokens: array of strings from the command line
@@ -59,7 +60,7 @@ long long int exit_handler(char **tokens)
 	if (_strcmp(tokens[0], "exit") == 0)
 	{
 		if (tokens[1] == NULL)
-			return (0);
+			return (127);
 		for (i = 0; tokens[1][i]; i++)
 		{
 			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
@@ -82,7 +83,7 @@ long long int exit_handler(char **tokens)
 }
 
 /**
- * print_env - replicates the bash env function
+ * env_handler - replicates the bash env function
  * @av: array of arguments from the command line
  *
  * Return: 0 on success, -1 on error

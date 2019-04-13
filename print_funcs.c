@@ -17,9 +17,9 @@ int _putchar(char c)
  */
 void print_prompt(void)
 {
-        char *s = "$ ";
+	char *s = "$ ";
 
-        write(2, s, 2);
+	write(2, s, 2);
 }
 
 /**
@@ -58,7 +58,7 @@ void print_error(int *i, char *s, char **argv)
 void print_error_env(char **argv)
 {
 	char *buf1, *buf2, *buf3;
-	
+
 	buf1 = str_concat(argv[0], ": ");
 	buf2 = str_concat(buf1, argv[1]);
 	free(buf1);
@@ -78,7 +78,7 @@ void print_error_exit(int *i, char *s, char **argv)
 {
 	char *buf1, *buf2, *buf3, *buf4, *buf5, *buf6, *buf7;
 	char *number = convert(*i, 10);
-	
+
 	buf1 = str_concat(s, ": ");
 
 	buf2 = str_concat(buf1, number);

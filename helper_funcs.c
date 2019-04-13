@@ -2,15 +2,17 @@
 
 /**
  * sigint_handler - doesn't exit in case of Ctrl-C
- * @sig: signal
+ * @sig: required for signal cmd to run properly
+ *	print newline;
+ *	print the prompt;
+ *	wipe input stream(?);
  */
 void sigint_handler(int sig)
 {
-	 (void)sig;
-	 signal(SIGINT, sigint_handler);
+	(void)sig;
 	 _putchar('\n');
 	 print_prompt();
-	 fflush(stdout);	//why is important?
+	 fflush(stdout);
 }
 
 /**

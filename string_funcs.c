@@ -86,6 +86,15 @@ char *str_concat(char *s1, char *s2)
 	return (s3);
 }
 
+/**
+* _strncmp - compare strings up to n bytes
+* @s1: string to compare against
+* @s2: string to compare from
+* @n: number of bytes to compare
+*
+* Return: differences between strings
+*/
+
 int _strncmp(char *s1, char *s2, unsigned int n)
 {
 	unsigned int i = 0;
@@ -114,17 +123,17 @@ int _strncmp(char *s1, char *s2, unsigned int n)
  */
 char *_strstr(char *haystack, char *needle)
 {
-        int i, j;
+	int i, j;
 
-        for (i = 0; haystack[i] != '\0'; i++)
-        {
-                for (j = 0; needle[j] != '\0'; j++)
-                {
-                        if (haystack[i + j] != needle[j])
-                                break;
-                }
-                if (!needle[j])
-                        return (&haystack[i]);
-        }
-        return (NULL);
+	for (i = 0; haystack[i] != '\0'; i++)
+	{
+		for (j = 0; needle[j] != '\0'; j++)
+		{
+			if (haystack[i + j] != needle[j])
+				break;
+		}
+		if (!needle[j])
+			return (&haystack[i]);
+	}
+	return (NULL);
 }

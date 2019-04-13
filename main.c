@@ -25,23 +25,17 @@ int exec(char **input, char *s, int *i)
 	{
 		if (get_env_val("PATH=")[0] != '/')
 			execve(input[0], input, environ);
-		
 		exe = path_finder(input);
-		if (!exe)
+		if (!exe && input[0])
 		{
-			if (input[0])
+			if (execve(input[0], input, environ) == -1)
 			{
-				if (execve(input[0], input, environ) == -1)
-				{
-					print_error(i, s, input);
-					free_everything(input);
-					//exit(EXIT_SUCCESS);
-					return (0);
-				}
+				print_error(i, s, input);
 				free_everything(input);
+				return (0);
 			}
+			free_everything(input);
 		}
-
 		if (execve(exe, input, environ) == -1)
 		{
 			print_error(i, s, input);
@@ -58,12 +52,26 @@ int exec(char **input, char *s, int *i)
 
 /**
  * main - simple command-line argument interpreter
- * Description: prints a prompt and waits for the user to input a command,
+ * prints a prompt and waits for the user to input a command,
  * then creates a child process in which it exececutes the command
  * @ac: number of arguments
  * @av: array of arguments
  *
- * Return: Always 0.
+ * handles ctrl+C
+ * if this shell is running from a terminal, print prompt
+ * read from stdin, modify line str  to line from stdin
+ * if getline failed,
+ * newline for terminal user(error message?)
+ * quit out of shell with error return
+ * if just enter is pressed
+ * replace newline with null byte to remove it. possible mem leak?
+ * break up inputted line into array of strings at space
+ * check if first element a builtin
+ * if call to exec failed
+ * count how many calls to the shell were made
+ * free input
+ *
+ * Return: default exit code (0).
  */
 int main(int ac, char *av[])
 {
@@ -71,33 +79,32 @@ int main(int ac, char *av[])
 	int cmd_count = 1, get;
 	char **input = NULL, *line = NULL, *prog_name = av[0];
 	(void)ac;
-		
-	signal(SIGINT, sigint_handler);		//handles ctrl+C
+
+	signal(SIGINT, sigint_handler);
 
 	while (1)
 	{
-		
-		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)	//if this shell is running from a terminal
+		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 			print_prompt();
-		get = getline(&line, &len, stdin);	//read from stdin, modify line str  to line from stdin
-		if (get < 0)	//if failure,
+		get = getline(&line, &len, stdin);
+		if (get < 0)
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
-				_putchar('\n');		//newline for terminal user(error message?)
+				_putchar('\n');
 			free(line);
-			return (1);			//quit out of shell with error return
+			return (1);
 		}
-		if (_strcmp(line, "\n") == 0)		//if just enter is pressed
+		if (_strcmp(line, "\n") == 0)
 			continue;
-		line[get - 1] = '\0';			//replace newline with null byte to remove it. could this have mem leak due to second null?
-		input = _strtok(line, ' ');		//break up inputted line into array of strings at space
-		if (is_builtin(line, prog_name, input, &cmd_count))	//is the first element a builtin?
+		line[get - 1] = '\0';
+		input = _strtok(line, ' ');
+		if (is_builtin(line, prog_name, input, &cmd_count))
 			continue;
-		if (!exec(input, prog_name, &cmd_count))			//if call to exec failed
+		if (!exec(input, prog_name, &cmd_count))
 			break;
-		cmd_count++;						//count how many calls to the shell were made
+		cmd_count++;
 		continue;
 	}
-	free(line);					//free input
-	return (0);					//default exit code
+	free(line);
+	return (0);
 }

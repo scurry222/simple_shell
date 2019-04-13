@@ -1,5 +1,12 @@
 #include "shell.h"
 
+/**
+* get_env_val - run commands if defined explicitly without PATH
+* @name: env key to check
+*
+* Return: string at value in env + length of name
+*/
+
 char *get_env_val(char *name)
 {
 	char **env = NULL;
