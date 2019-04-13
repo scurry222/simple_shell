@@ -3,7 +3,7 @@
 .B Simple Shell
 - command line interpreter
 .SH SYNOPSIS
-.B ($) [command] -[options]
+.B $ [command] -[options] [arguments]
 .sp
 .SH DESCRIPTION
 Simple Shell is a replica of the Unix shell. It works the same way the
@@ -31,7 +31,7 @@ and the program will return to the parent process.
 .RS
 Simple Shell accepts two modes: interactive and non-interactive. To enter the interactive mode, just execute ./hsh.
 The parent process will print the prompt 
-.B ($) 
+.B $ 
 and wait for the user to input a command, that will be executed by execve().
 To use the non-interactive mode, pipe
 .I echo
@@ -43,8 +43,10 @@ followed by the command in double quotes into ./hsh. This mode doesn't print a p
 The way Simple Shell works is that when it receives input from the command line,
 it searches for a shell function by that name. If it doesn't find it, it searches for a builtin by that name.
 If it's not a builtin, and the command is the full name of an executable, like /bin/ls, it will be executed. 
-If the command doesn't include its full path, then Simple Shell searches in the PATH environment variable for the command and its directory.
+If the command doesn't include its full path, and the PATH environment variable has not been altered, then Simple Shell searches in the PATH for the command and its directory.
 PATH is a colon-separated list of directories containing the executable programs corresponding to the commands.
+If PATH has been altered, or emptied, Simple Shell will first look in the current working directory to see if the command corresponds to an executable.
+If it finds it there, this executable will be executed, if not, it will go through the PATH to try to find the full path of the command.
 .RE
 .sp
 .B Builtins
@@ -61,7 +63,7 @@ prints the environment variables list to the standard output.
 .sp
 .SH EXAMPLES
 .sp
-.B ($) ls -l 
+.B $ ls -l 
 .RS
 will list all the files in the current working directory, in long format.
 .RE
@@ -69,11 +71,11 @@ will list all the files in the current working directory, in long format.
 .RS
 will show the entire path of the current working directory, in non-interactive mode.
 .RE
-.B ($) baguette
+.B $ baguette
 .RS
 will throw an error message if "baguette" is not an executable file the Simple Shell can find.
 .RE
-.B ($) exit 98
+.B $ exit 98
 .RS
 will exit the Simple Shell with a status of 98.
 .RE
@@ -81,12 +83,10 @@ will exit the Simple Shell with a status of 98.
 .I dash
 .SH NOTES
 Simple Shell is entirely coded in the C programming language. It does not entirely replicate the real shell, 
-as error messages might not be the same depending on the command, or some builtins and features are missing.
+as some builtins and features are missing. Simple Shell only takes one command at a time for now.
 .sp
 .SH BUGS
-The
-.I exit
-builtin does not have a status limit, where the real shell exit builtin has status limits of INT_MAX and INT_MIN.
-It exits the Simple Shell with whatever status you pass to it, as long as it's a numerical value.
+As mentionned before, some regular shell builtins are not implemented in Simple Shell, and trying to execute them
+will end up in unexpected behavior, or error message.
 .SH AUTHORS
 Scout Curry and Laura Roudge, Cohort 8.
