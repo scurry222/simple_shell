@@ -4,7 +4,10 @@
 * get_env_val - run commands if defined explicitly without PATH
 * @name: env key to check
 *
-* Return: string at value in env + length of name
+* loop through strings in env
+* if the name compares,
+*
+* Return: string at value in env
 */
 
 char *get_env_val(char *name)
@@ -54,7 +57,15 @@ char **get_env(char *name)
 * path_finder - connect dirs in PATH with inputted command, check if executable
 * @s: input, in form array of strings
 *
-* Return: concatenated string
+* call get_env to get value at PATH, save into path_value
+* if failure, free and return NULL
+* loop through strings in path_value
+* cat dir in PATH with command
+* if executable, free variables and return catted string to exec func
+* if not, free variables and go to next dir
+* if no dirs worked, return NULL
+*
+* Return: concatenated string on success, NULL if failure
 */
 
 char *path_finder(char **s)
@@ -65,7 +76,6 @@ char *path_finder(char **s)
 	char **path_value = NULL;
 
 	path_value = get_env("PATH");
-
 	if (!path_value)
 	{
 		free_everything(path_value);
