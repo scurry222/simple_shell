@@ -29,6 +29,7 @@ What we learned:
 
 ## Compile and run
 ```gcc -Wall -Werror -Wextra -pedantic *.c -o hsh```
+
 ```./hsh```
 
 ## Usage
