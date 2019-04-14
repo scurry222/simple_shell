@@ -91,8 +91,12 @@ int main(int ac, char *av[])
 	size_t len = 0;
 	int cmd_count = 0, get;
 	char **input = NULL, *line = NULL, *prog_name = av[0];
-	(void)ac;
 
+	if (ac != 1)
+	{
+		print_error_main(av);
+		exit(127);
+	}
 	signal(SIGINT, sigint_handler);
 
 	while (1)

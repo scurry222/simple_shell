@@ -63,7 +63,7 @@ long long int exit_handler(char **tokens)
 			return (127);
 		for (i = 0; tokens[1][i]; i++)
 		{
-			if (tokens[1][i] >= '0' && tokens[1][i] <= '9')
+			if ((tokens[1][i] >= '0' && tokens[1][i] <= '9') || tokens[1][0] == '+')
 			{
 				flag = 1;
 				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')

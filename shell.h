@@ -19,11 +19,11 @@ extern char **environ;
 int exec(char **input, char *s, int *i);
 
 /* print_funcs.c */
-int _putchar(char c);
 void print_prompt(void);
 void print_error(int *i, char *s, char **argv);
 void print_error_env(char **argv);
 void print_error_exit(int *i, char *s, char **argv);
+void print_error_main(char **av);
 
 /* string_funcs.c */
 int _strcmp(char *s1, char *s2);
@@ -42,6 +42,7 @@ int wordcount(char *str, char delim);
 char **_strtok(char *str, char delim);
 
 /* helper_funcs.c */
+int _putchar(char c);
 void free_everything(char **args);
 void sigint_handler(int sig);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);

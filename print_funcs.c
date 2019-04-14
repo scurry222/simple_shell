@@ -1,18 +1,6 @@
 #include "shell.h"
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-/**
  * print_prompt - prints a prompt for the shell
  */
 void print_prompt(void)
@@ -95,4 +83,21 @@ void print_error_exit(int *i, char *s, char **argv)
 	free(buf6);
 	write(2, buf7, _strlen(buf7));
 	free(buf7);
+}
+
+/**
+ * print_error_main - prints a custom error message for main
+ * @av: array of arguments passed to main
+ */
+void print_error_main(char **av)
+{
+	char *buf1, *buf2, *buf3;
+
+	buf1 = str_concat(av[0], ": 0: Can't open ");
+	buf2 = str_concat(buf1, av[1]);
+	free(buf1);
+	buf3 = str_concat(buf2, "\n");
+	free(buf2);
+	write(2, buf3, _strlen(buf3));
+	free(buf3);
 }
