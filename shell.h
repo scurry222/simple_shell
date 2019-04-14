@@ -15,6 +15,21 @@
 
 extern char **environ;
 
+/**
+ * struct list_s - singly linked list
+ * @str: string - (malloc'ed string)
+ * @len: length of the string
+ * @next: points to the next node
+ *
+ * Description: singly linked list node structure
+ * for Holberton project
+ */
+typedef struct list_s
+{
+	char *str;
+	struct list_s *next;
+} env_t;
+
 /* main.c */
 int exec(char **input, char *s, int *i);
 
@@ -31,6 +46,7 @@ int _strlen(char *s);
 char *str_concat(char *s1, char *s2);
 char *_strstr(char *haystack, char *needle);
 int _strncmp(char *s1, char *s2, unsigned int n);
+char *_strdup(char *str);
 
 /* path_finder.c */
 char **get_env(char *name);
@@ -55,5 +71,23 @@ int env_handler(char **av);
 /* convert.c */
 char *convert(int num, int base);
 long long int _atoi(char *s);
+
+/* list_funcs_1.c */
+env_t *add_node_end(env_t **head, const char *str);
+int add_node_at_index(env_t **head, char *str, int index);
+int delete_node_at_index(env_t **head, unsigned int index);
+int find_index_list(env_t *head, char *name);
+
+/* list_funcs_2.c */
+size_t list_len(const list_t *h);
+size_t print_list(env_t *h);
+void free_list(env_t **head);
+int arr_to_list(env_t **head);
+char **list_to_arr(env_t *head);
+
+/* set_env.c */
+int _unsetenv(env_t **head, char *name);
+int _setenv(env_t **head, char *name, char *value);
+
 
 #endif

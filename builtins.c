@@ -14,7 +14,7 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 	int n;
 	long long int m;
 
-	if (_strcmp(argv[0], "exit") == 0)  /* if any arg is the string exit, */
+	if (!_strcmp(argv[0], "exit"))  /* if any arg is the string exit, */
 	{
 		m = exit_handler(argv);
 		if (m == -1)
@@ -31,7 +31,7 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 		*i = *i + 1;
 		return (1);
 	}
-	if (_strcmp(line, "env") == 0)
+	if (!_strcmp(line, "env"))
 	{
 		n = env_handler(argv);
 		if (n == -1)
@@ -41,6 +41,13 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 		free_everything(argv);
 		*i = *i + 1;
 		return (1);
+	}
+	if (!_strcmp(argv[0], "setenv") || !_strcmp(argv[0], "unsetenv"))
+	{
+		/* call to function that creates the linked list
+		 * calls setenv or unsetenv
+		 * puts the linked list back in an array
+		 */
 	}
 	return (0);
 }
