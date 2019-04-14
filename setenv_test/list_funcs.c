@@ -1,5 +1,37 @@
 #include "list.h"
 
+char **list_to_arr(env_t *head)
+{
+	env_t *temp = head;
+	char **arr, *s;
+	size_t size;
+	int i;
+
+	size = list_len(head);
+
+	if (!head || !size)
+		return (NULL);
+
+	arr = malloc(sizeof(char *) * (size + 1));
+	if (!arr)
+		return (NULL);
+
+	for (i = 0; temp; temp = temp->next, i++)
+	{
+		s = malloc(sizeof(char) * (_strlen(temp->str) + 1));
+		if (!s)
+		{
+			free_everything(arr);
+			return (NULL);
+		}
+		s = _strcpy(s, temp->str);
+		arr[i] = s;
+	}
+	arr[i] = NULL;
+
+	return (arr);
+}
+
 /**
  * print_list - prints all the elements of a linked list
  * @h: pointer to the list_t list to print
@@ -84,7 +116,7 @@ void free_list(env_t **head)
  *
  * Return: 1 (Success), or -1 (Fail)
  */
-int delete_nodeint_at_index(env_t **head, unsigned int index)
+int delete_node_at_index(env_t **head, unsigned int index)
 {
 	env_t *temp = *head;
 	env_t *current = NULL;
@@ -115,7 +147,40 @@ int delete_nodeint_at_index(env_t **head, unsigned int index)
 
 	return (1);
 }
+int add_node_at_index(env_t **head, char *str, int idx)
+{
+	int i;
+	env_t *new;
+	env_t *temp = *head;
 
+	new = malloc(sizeof(env_t));
+	if (!new || !head)
+		return (-1);
+
+	new->str = _strdup(str);
+	new->next = NULL;
+
+	if (idx == 0)
+	{
+		new->next = *head;
+		*head = new;
+		return (0);
+	}
+
+	for (i = 0; temp && i < idx; i++)
+	{
+		if (i == idx - 1)
+		{
+			new->next = temp->next;
+			temp->next = new;
+			return (0);
+		}
+		else
+			temp = temp->next;
+	}
+
+	return (-1);
+}
 
 int arr_to_list(env_t **head)
 {
@@ -129,19 +194,19 @@ int arr_to_list(env_t **head)
 	return (i);
 }
 
-int find_index_list(char *name, env_t **head)
+int find_index_list(env_t *head, char *name)
 {
 	int index = 0;
 	int c;
 
-	while (*head)
+	while (head)
 	{
-		c = strncmp((*head)->str, name, strlen(name));
+		c = strncmp(head->str, name, strlen(name));
 		if (c == 0)
 			return (index);
 		else
 			index++;
-		*head = (*head)->next;
+		head = head->next;
 	}
 
 	return (0);
