@@ -29,7 +29,7 @@ typedef struct list_s
 } env_t;
 
 /* main.c */
-int exec(char **input, char *s, int *i, char **env);
+int exec(char **input, char *s, int *i, env_t **head);
 
 /* path_finder.c */
 char **get_env(char *name);
@@ -64,7 +64,7 @@ void free_everything(char **args);
 void sigint_handler(int sig);
 
 /* builtins.c */
-int is_builtin(char **argv, char *prog_name, int *i, env_t **head);
+int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head);
 long long int exit_handler(char **tokens);
 int env_handler(char **av, env_t **head);
 
