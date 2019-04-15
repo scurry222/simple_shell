@@ -9,7 +9,7 @@
  *
  * Return: 1 if yes, 0 if no
  */
-int is_builtin(char **argv, char *prog_name, int *i, env_t **head)
+int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 {
 	int n;
 	long long int m;
@@ -23,10 +23,11 @@ int is_builtin(char **argv, char *prog_name, int *i, env_t **head)
 		}
 		else
 		{
+			free(line);
 			free_everything(argv);
+			free_list(head);
 			exit(m);
 		}
-		free_everything(argv);
 		*i = *i + 1;
 		return (1);
 	}
@@ -37,7 +38,6 @@ int is_builtin(char **argv, char *prog_name, int *i, env_t **head)
 		{
 			print_error_env(argv);
 		}
-		free_everything(argv);
 		*i = *i + 1;
 		return (1);
 	}

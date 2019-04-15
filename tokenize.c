@@ -48,7 +48,7 @@ char **_strtok(char *str, char delim)
 		return (NULL);
 	while (*str && i < total)
 	{
-		if (*str == delim)
+		if (*str == delim || ++*str == delim)
 			str++;
 		else
 		{

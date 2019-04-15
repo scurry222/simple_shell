@@ -7,7 +7,7 @@
 * Return: New string on success, null if memory allocation failed
 */
 
-char *_strdup(char *str)
+char *_strdup(const char *str)
 {
 	char *dup;
 	int c, i = 0;
@@ -18,8 +18,7 @@ char *_strdup(char *str)
 	while (str[i])
 		i++;
 
-	dup = malloc(sizeof(char) * i + 1);
-
+	dup = malloc(sizeof(char) * (i + 1));
 	if (!dup)
 		return (NULL);
 

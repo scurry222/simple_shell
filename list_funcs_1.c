@@ -7,22 +7,22 @@
  *
  * Return: address of the new element, or NULL if it failed
  */
-env_t *add_node_end(env_t **head, const char *str)
+void add_node_end(env_t **head, const char *str)
 {
 	env_t *new;
 	env_t *temp = *head;
 
 	new = malloc(sizeof(env_t));
 	if (!new)
-		return (NULL);
+		return;
 
-	new->str = strdup(str);
+	new->str = _strdup(str);
 	new->next = NULL;
 
 	if (*head == NULL)
 	{
 		*head = new;
-		return (new);
+		return;
 	}
 
 	while (temp->next)
@@ -30,7 +30,6 @@ env_t *add_node_end(env_t **head, const char *str)
 
 	temp->next = new;
 
-	return (new);
 }
 
 /**

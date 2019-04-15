@@ -22,10 +22,10 @@
 *
 * Return: return to main loop (1)
 */
-int exec(char **input, char *s, int *i, char **env)
+int exec(char **input, char *s, int *i, env_t **head)
 {
 	int status;
-	char *exe = NULL;
+	char *exe = NULL, **env = NULL;
 	pid_t child_pid;
 
 	child_pid = fork();
@@ -33,11 +33,11 @@ int exec(char **input, char *s, int *i, char **env)
 	{
 		perror(s);
 		free_everything(input);
-		free_everything(env);
-		exit(EXIT_SUCCESS);
+		exit(0);
 	}
 	if (child_pid == 0)
 	{
+		env = list_to_arr(*head);
 		if (get_env_val("PATH=")[0] != '/')
 			execve(input[0], input, env);
 		exe = path_finder(input);
@@ -48,7 +48,7 @@ int exec(char **input, char *s, int *i, char **env)
 				print_error(i, s, input);
 				free_everything(input);
 				free_everything(env);
-				exit(EXIT_SUCCESS);
+				return (0);
 			}
 			free_everything(input);
 			free_everything(env);
@@ -59,7 +59,7 @@ int exec(char **input, char *s, int *i, char **env)
 			free(exe);
 			free_everything(input);
 			free_everything(env);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 	}
 	else
@@ -96,7 +96,7 @@ int main(int ac, char *av[])
 {
 	size_t len = 0;
 	int cmd_count = 0, get, nodes;
-	char **input = NULL, *line = NULL, *prog_name = av[0], **env = NULL;
+	char **input = NULL, *line = NULL, *prog_name = av[0];
 	env_t *head = NULL;
 
 	if (ac != 1)
@@ -119,6 +119,7 @@ int main(int ac, char *av[])
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
 			free(line);
+			free_list(&head);
 			return (1);
 		}
 		cmd_count++;
@@ -126,16 +127,19 @@ int main(int ac, char *av[])
 			continue;
 		line[get - 1] = '\0';
 		input = _strtok(line, ' ');
+		free(line);
 		if (!input)
 			continue;
-		if (is_builtin(input, prog_name, &cmd_count, &head))
+		if (is_builtin(line, input, prog_name, &cmd_count, &head))
+		{
+			free_everything(input);
 			continue;
-		env = list_to_arr(head);
-		if (!exec(input, prog_name, &cmd_count, env))
+		}
+		if (!exec(input, prog_name, &cmd_count, &head))
 			break;
 		continue;
 	}
-	free(line);
 	free_list(&head);
+	free(line);
 	return (0);
 }
