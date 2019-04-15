@@ -5,6 +5,7 @@
 * @input: array of arguments from standard input
 * @s: name of the program
 * @i: index of error
+* @env: environ variable
 *
 * make child process
 * if fork failed, print error, free, and exit
@@ -21,7 +22,7 @@
 *
 * Return: return to main loop (1)
 */
-int exec(char **input, char *s, int *i)
+int exec(char **input, char *s, int *i, char **env)
 {
 	int status;
 	char *exe = NULL;
@@ -32,34 +33,39 @@ int exec(char **input, char *s, int *i)
 	{
 		perror(s);
 		free_everything(input);
+		free_everything(env);
 		exit(EXIT_SUCCESS);
 	}
 	if (child_pid == 0)
 	{
 		if (get_env_val("PATH=")[0] != '/')
-			execve(input[0], input, environ);
+			execve(input[0], input, env);
 		exe = path_finder(input);
 		if (!exe && input[0])
 		{
-			if (execve(input[0], input, environ) == -1)
+			if (execve(input[0], input, env) == -1)
 			{
 				print_error(i, s, input);
 				free_everything(input);
+				free_everything(env);
 				exit(EXIT_SUCCESS);
 			}
 			free_everything(input);
+			free_everything(env);
 		}
-		if (execve(exe, input, environ) == -1)
+		if (execve(exe, input, env) == -1)
 		{
 			print_error(i, s, input);
 			free(exe);
 			free_everything(input);
+			free_everything(env);
 			exit(EXIT_SUCCESS);
 		}
 	}
 	else
 		wait(&status);
 	free_everything(input);
+	free_everything(env);
 	return (1);
 }
 
@@ -89,8 +95,9 @@ int exec(char **input, char *s, int *i)
 int main(int ac, char *av[])
 {
 	size_t len = 0;
-	int cmd_count = 0, get;
-	char **input = NULL, *line = NULL, *prog_name = av[0];
+	int cmd_count = 0, get, nodes;
+	char **input = NULL, *line = NULL, *prog_name = av[0], **env = NULL;
+	env_t *head = NULL;
 
 	if (ac != 1)
 	{
@@ -98,6 +105,9 @@ int main(int ac, char *av[])
 		exit(127);
 	}
 	signal(SIGINT, sigint_handler);
+	nodes = arr_to_list(&head);
+	if (!nodes)
+		printf("Impossible to create linked list\n");
 
 	while (1)
 	{
@@ -116,12 +126,16 @@ int main(int ac, char *av[])
 			continue;
 		line[get - 1] = '\0';
 		input = _strtok(line, ' ');
-		if (is_builtin(line, prog_name, input, &cmd_count))
+		if (!input)
 			continue;
-		if (!exec(input, prog_name, &cmd_count))
+		if (is_builtin(input, prog_name, &cmd_count, &head))
+			continue;
+		env = list_to_arr(head);
+		if (!exec(input, prog_name, &cmd_count, env))
 			break;
 		continue;
 	}
 	free(line);
+	free_list(&head);
 	return (0);
 }

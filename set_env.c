@@ -58,10 +58,8 @@ int _unsetenv(env_t **head, char *name)
 {
 	int index = find_index_list(*head, name);
 
-	/**
-	 * if (!name)
-	 * ("errrrrror\n");
-	 */
+	 if (!name)
+		 return (-1);
 
 	if (index == 0 || !head || !*head)
 		return (-1);
@@ -74,5 +72,30 @@ int _unsetenv(env_t **head, char *name)
 	return (-1);
 }
 
+/**
+ * setenv_handler - handles the setenv and unsetenv builtins
+ * @argv: array of arguments from the command line
+ * @head: pointer to the env_t linked list
+ */
+void setenv_handler(char **argv, env_t **head)
+{
+	int n, m;
 
-
+	if (!_strcmp(argv[0], "setenv"))
+	{
+		n = _setenv(head, argv[1], argv[2]);
+		if (n == -1)
+		{
+			printf("ERROR SETENV\n");
+			//error function
+		}
+	} else if (!_strcmp(argv[0], "unsetenv"))
+	{
+		m = _unsetenv(head, argv[1]);
+		if (m == -1)
+		{
+			printf("ERROR UNSETENV\n");
+			//error function
+		}
+	}
+}

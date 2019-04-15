@@ -2,14 +2,14 @@
 
 /**
  * is_builtin - checks if the command is a builtin
- * @line: input line
  * @prog_name: name of the program
  * @argv: parsed command line
  * @i: pointer to the increment variable of main
+ * @head: double pointer to the environ linked list
  *
  * Return: 1 if yes, 0 if no
  */
-int is_builtin(char *line, char *prog_name, char **argv, int *i)
+int is_builtin(char **argv, char *prog_name, int *i, env_t **head)
 {
 	int n;
 	long long int m;
@@ -23,7 +23,6 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 		}
 		else
 		{
-			free(line);
 			free_everything(argv);
 			exit(m);
 		}
@@ -31,9 +30,9 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 		*i = *i + 1;
 		return (1);
 	}
-	if (!_strcmp(line, "env"))
+	if (!_strcmp(argv[0], "env"))
 	{
-		n = env_handler(argv);
+		n = env_handler(argv, head);
 		if (n == -1)
 		{
 			print_error_env(argv);
@@ -44,11 +43,8 @@ int is_builtin(char *line, char *prog_name, char **argv, int *i)
 	}
 	if (!_strcmp(argv[0], "setenv") || !_strcmp(argv[0], "unsetenv"))
 	{
-		/**
-		 * call to function that creates the linked list
-		 * calls setenv or unsetenv
-		 * puts the linked list back in an array
-		 */
+		setenv_handler(argv, head);
+		return (1);
 	}
 	return (0);
 }
@@ -93,21 +89,15 @@ long long int exit_handler(char **tokens)
 /**
  * env_handler - replicates the bash env function
  * @av: array of arguments from the command line
+ * @head: double pointer to the env_t linked list
  *
  * Return: 0 on success, -1 on error
  */
-int env_handler(char **av)
+int env_handler(char **av, env_t **head)
 {
-	int i, j;
-
 	if (av[1] == NULL)
 	{
-		for (i = 0; environ[i]; i++)
-		{
-			for (j = 0; environ[i][j]; j++)
-				_putchar(environ[i][j]);
-			_putchar('\n');
-		}
+		print_list(*head);
 		return (0);
 	}
 	return (-1);
