@@ -18,9 +18,7 @@ int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 	{
 		m = exit_handler(argv);
 		if (m == -1)
-		{
 			print_error_exit(i, prog_name, argv);
-		}
 		else
 		{
 			free_everything(argv);
@@ -28,7 +26,6 @@ int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 			free_list(head);
 			exit(m);
 		}
-		free_everything(argv);
 		*i = *i + 1;
 		return (1);
 	}
@@ -36,9 +33,7 @@ int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 	{
 		n = env_handler(argv, head);
 		if (n == -1)
-		{
 			print_error_env(argv);
-		}
 		*i = *i + 1;
 		return (1);
 	}

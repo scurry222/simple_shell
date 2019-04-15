@@ -57,6 +57,7 @@ char *_strdup(char *str);
 /* string_funcs_2.c */
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
+void _puts(char *str);
 
 /* helper_funcs.c */
 int _putchar(char c);
@@ -86,8 +87,8 @@ int arr_to_list(env_t **head);
 char **list_to_arr(env_t *head);
 
 /* set_env.c */
-int _unsetenv(env_t **head, char *name);
-int _setenv(env_t **head, char *name, char *value);
+int _unsetenv(env_t **head, char **argv);
+int _setenv(env_t **head, char **argv, int args);
 void setenv_handler(char **argv, env_t **head);
 
 #endif

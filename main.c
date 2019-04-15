@@ -140,5 +140,6 @@ int main(int ac, char *av[])
 		continue;
 	}
 	free_list(&head);
+	free(line);
 	return (0);
 }

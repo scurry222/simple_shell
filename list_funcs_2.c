@@ -69,9 +69,9 @@ size_t print_list(env_t *h)
 	while (h)
 	{
 		if (!h->str)
-			printf("(nil)\n");
+			_puts("(nil)");
 		else
-			printf("%s\n", h->str);
+			_puts(h->str);
 		h = h->next;
 		s++;
 	}
@@ -93,6 +93,7 @@ void free_list(env_t **head)
 	while (*head)
 	{
 		temp = (*head)->next;
+		free((*head)->str);
 		free(*head);
 		*head = temp;
 	}
