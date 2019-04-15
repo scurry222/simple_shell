@@ -1,5 +1,29 @@
 #include "shell.h"
 
+/**
+ * arr_to_list - transforms the environ variable into a linked list
+ * @head: double pointer to the env_t list to fill
+ *
+ * Return: Number of elements in the list
+ */
+int arr_to_list(env_t **head)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		add_node_end(head, environ[i]);
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * list_to_arr - transforms a linked list in an array of strings
+ * @head: pointer to the env_t list
+ *
+ * Return: address of the array, or NULL if it failed
+ */
 char **list_to_arr(env_t *head)
 {
 	env_t *temp = head;
@@ -76,25 +100,13 @@ void free_list(env_t **head)
 	*head = NULL;
 }
 
-int arr_to_list(env_t **head)
-{
-	int i = 0;
-
-	while (environ[i])
-	{
-		add_node_end(head, environ[i]);
-		i++;
-	}
-	return (i);
-}
-
 /**
  * list_len - returns the number of elements in a linked list
- * @h: pointer to the list_t list
+ * @h: pointer to the env_t list
  *
  * Return: number of elements in h
  */
-size_t list_len(const list_t *h)
+size_t list_len(const env_t *h)
 {
 	size_t n = 0;
 

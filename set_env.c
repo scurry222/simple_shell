@@ -1,12 +1,13 @@
 #include "shell.h"
 
 /**
-*
-*
-*
-*
-*/
-
+ * _setenv - sets an environment variable
+ * @head: double pointer to the environ linked list
+ * @name: name of the variable to set
+ * @value: value of the variable to set
+ *
+ * Return: 0 on success, -1 on failure
+ */
 int _setenv(env_t **head, char *name, char *value)
 {
 	char *buf1, *buf2;
@@ -47,17 +48,20 @@ int _setenv(env_t **head, char *name, char *value)
 }
 
 /**
-*
-*
-*
-*/
-
+ * _unsetenv - unsets an environment variable
+ * @head: double pointer to the environ linked list
+ * @name: name of the variable to unset
+ *
+ * Return: 0 on success, -1 on failure
+ */
 int _unsetenv(env_t **head, char *name)
 {
 	int index = find_index_list(*head, name);
 
-//	if (!name)
-		// ("errrrrror\n");
+	/**
+	 * if (!name)
+	 * ("errrrrror\n");
+	 */
 
 	if (index == 0 || !head || !*head)
 		return (-1);

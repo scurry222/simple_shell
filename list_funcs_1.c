@@ -34,7 +34,7 @@ env_t *add_node_end(env_t **head, const char *str)
 }
 
 /**
- * delete_nodeint_at_index - deletes a node in a linked list at a certain index
+ * delete_node_at_index - deletes a node in a linked list at a certain index
  * @head: pointer to the first element in the list
  * @index: index of the node to delete
  *
@@ -72,6 +72,14 @@ int delete_node_at_index(env_t **head, unsigned int index)
 	return (1);
 }
 
+/**
+ * add_node_at_index - adds a new node in a linked list at a given index
+ * @head: double pointer to the en_t list
+ * @str: string to put in the new node
+ * @idx: index where to insert the node
+ *
+ * Return: 0 on success, -1 on failure
+ */
 int add_node_at_index(env_t **head, char *str, int idx)
 {
 	int i;
@@ -107,6 +115,13 @@ int add_node_at_index(env_t **head, char *str, int idx)
 	return (-1);
 }
 
+/**
+ * find_index_list - finds the index of a given element in a list
+ * @head: pointer to the env_t list
+ * @name: string of the node to find
+ *
+ * Return: index of the node, or 0 if the node is not found
+ */
 int find_index_list(env_t *head, char *name)
 {
 	int index = 0;
@@ -117,8 +132,7 @@ int find_index_list(env_t *head, char *name)
 		c = strncmp(head->str, name, strlen(name));
 		if (c == 0)
 			return (index);
-		else
-			index++;
+		index++;
 		head = head->next;
 	}
 
