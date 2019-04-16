@@ -51,6 +51,7 @@ int delete_node_at_index(env_t **head, unsigned int index)
 	if (index == 0)
 	{
 		*head = (*head)->next;
+		free(temp->str);
 		free(temp);
 		return (1);
 	}
@@ -63,9 +64,9 @@ int delete_node_at_index(env_t **head, unsigned int index)
 		i++;
 	}
 
-
 	current = temp->next;
 	temp->next = current->next;
+	free(current->str);
 	free(current);
 
 	return (1);

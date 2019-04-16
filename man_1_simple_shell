@@ -52,6 +52,7 @@ If it finds it there, this executable will be executed, if not, it will go throu
 .B Builtins
 .RS
 Simple Shell has a few builtins that replicate the real shell builtins.
+.sp
 .RE
 .RS
 .B - exit [status]
@@ -59,6 +60,14 @@ exits the program with an exit status of the value specified as an argument by t
 .sp
 .B - env
 prints the environment variables list to the standard output.
+.sp
+.B - setenv [name] [value]
+without arguments, prints the environment variables.
+With [name], creates and exports an empty environment variable.
+With [name] and [value], creates and exports an environment variable and sets its value.
+.sp
+.B - unsetenv [name]
+Deletes the environment variable [name].
 .RE
 .sp
 .SH EXAMPLES
@@ -80,7 +89,8 @@ will throw an error message if "baguette" is not an executable file the Simple S
 will exit the Simple Shell with a status of 98.
 .RE
 .SH SEE ALSO
-.I dash
+.I dash,
+.I csh
 .SH NOTES
 Simple Shell is entirely coded in the C programming language. It does not entirely replicate the real shell, 
 as some builtins and features are missing. Simple Shell only takes one command at a time for now.
