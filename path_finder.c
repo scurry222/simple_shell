@@ -3,6 +3,7 @@
 /**
 * get_env_val - run commands if defined explicitly without PATH
 * @name: env key to check
+* @env: array of strings containing environment copy
 *
 * loop through strings in env
 * if the name compares,
@@ -23,6 +24,7 @@ char *get_env_val(char *name, char **env)
 /**
 * get_env - access environment to get value at passed in name
 * @name: key (key=value) to select in env
+* @env: array of strings containing the environment copy
 *
 * Return: value at key
 */
@@ -51,6 +53,7 @@ char **get_env(char *name, char **env)
 /**
 * path_finder - connect dirs in PATH with inputted command, check if executable
 * @s: input, in form array of strings
+* @env: array of strings containing the environment copy
 *
 * call get_env to get value at PATH, save into path_value
 * if failure, free and return NULL

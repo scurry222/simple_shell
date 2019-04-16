@@ -9,7 +9,7 @@
 int arr_to_list(env_t **head, char **env)
 {
 	int i = 0;
-	
+
 	if (head)
 		free_list(head);
 

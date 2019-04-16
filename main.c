@@ -5,7 +5,7 @@
 * @input: array of arguments from standard input
 * @s: name of the program
 * @i: index of error
-* @env: environ variable
+* @head: linked list containing environment
 *
 * make child process
 * if fork failed, print error, free, and exit
@@ -46,26 +46,21 @@ int exec(char **input, char *s, int *i, env_t **head)
 			if (execve(input[0], input, env) == -1)
 			{
 				print_error(i, s, input);
-				free_everything(input);
-				free_everything(env);
+				free_everything(input), free_everything(env);
 				return (0);
 			}
-			free_everything(input);
-			free_everything(env);
+			free_everything(input), free_everything(env);
 		}
 		if (execve(exe, input, env) == -1)
 		{
 			print_error(i, s, input);
-			free(exe);
-			free_everything(input);
-			free_everything(env);
+			free(exe), free_everything(input), free_everything(env);
 			exit(EXIT_SUCCESS);
 		}
 	}
 	else
 		wait(&status);
-	free_everything(input);
-	free_everything(env);
+	free_everything(input), free_everything(env);
 	return (1);
 }
 
@@ -95,7 +90,7 @@ int exec(char **input, char *s, int *i, env_t **head)
 int main(int ac, char *av[])
 {
 	size_t len = 0;
-	int cmd_count = 0, get, nodes;
+	int cmd_count = 0, get;
 	char **input = NULL, *line = NULL, *prog_name = av[0];
 	env_t *head = NULL;
 
@@ -105,10 +100,7 @@ int main(int ac, char *av[])
 		exit(127);
 	}
 	signal(SIGINT, sigint_handler);
-	nodes = arr_to_list(&head, environ);
-	if (!nodes)
-		printf("Impossible to create linked list\n");
-
+	arr_to_list(&head, environ);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
@@ -118,28 +110,40 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
-			free(line);
-			free_list(&head);
+			free(line), free_list(&head);
 			return (1);
 		}
 		cmd_count++;
 		if (_strcmp(line, "\n") == 0)
 			continue;
-		if (line[get - 1] == '\n')
-			line[get - 1] = '\0';
-		input = _strtok(line, ' ');
+		input = parse_line(line, get);
 		if (!input)
 			continue;
 		if (is_builtin(line, input, prog_name, &cmd_count, &head))
-		{
-			free_everything(input);
-			continue;
-		}
+			free_everything(input), continue;
 		if (!exec(input, prog_name, &cmd_count, &head))
 			break;
 		continue;
 	}
-	free_list(&head);
-	free(line);
+	free_list(&head), free(line);
 	return (0);
+}
+
+/**
+* parse_line - handle newline character if found, and call strtok
+* @line: line read from stdin
+* @get: size of line returned from getline
+*
+* Return: parsed line
+*/
+
+char **parse_line(char *line, int get)
+{
+	char **input;
+
+	if (line[get - 1] == '\n')
+		line[get - 1] = '\0';
+	input = _strtok(line, ' ');
+
+	return (input);
 }

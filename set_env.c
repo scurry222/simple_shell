@@ -51,7 +51,7 @@ int _setenv(env_t **head, char **argv, int args)
 /**
  * _unsetenv - unsets an environment variable
  * @head: double pointer to the environ linked list
- * @name: name of the variable to unset
+ * @argv: array of strings, includes parsed line
  *
  * Return: 0 on success, -1 on failure
  */

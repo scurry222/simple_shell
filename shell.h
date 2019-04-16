@@ -30,6 +30,7 @@ typedef struct list_s
 
 /* main.c */
 int exec(char **input, char *s, int *i, env_t **head);
+char **parse_line(char *line, int get);
 
 /* path_finder.c */
 char **get_env(char *name, char **env);

@@ -2,6 +2,7 @@
 
 /**
  * is_builtin - checks if the command is a builtin
+ * @line: line from input, passed in to free properly
  * @prog_name: name of the program
  * @argv: parsed command line
  * @i: pointer to the increment variable of main
@@ -166,7 +167,7 @@ void change_pwd(char *path, char **env, env_t **head)
 	old[1] = _strdup("OLDPWD");
 	old[2] = _strdup(get_env_val("PWD=", env));
 	old[3] = NULL;
-	current = malloc (sizeof(char *) * 4);
+	current = malloc(sizeof(char *) * 4);
 	current[0] = _strdup("current");
 	current[1] = _strdup("PWD");
 	current[2] = _strdup(path);
