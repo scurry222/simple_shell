@@ -71,12 +71,16 @@ This is a test file
 File | Content
 ---- | -----------
 [main.c](./main.c) | entry point, executing function
-[shell.h](./shell.h) | function protoypes, standard libraries
+[shell.h](./shell.h) | function prototypes, standard libraries, structs
 [print_funcs.c](./print_funcs.c) | printing functions
-[string_funcs.c](./string_funcs.c) | string-handling functions
+[string_funcs_1.c](./string_funcs_1.c) | string-handling functions
+[string_funcs_2.c](./string_funcs_2.c) | string-handling functions
+[list_funcs_1.c](./list_funcs_1.c) | linked list handling functions
+[list_funcs_2.c](./list_funcs_2.c) | linked list handling functions
 [tokenize.c](./tokenize.c) | string to tokens parsing functions
 [path_finder.c](./path_finder.c) | functions that check the PATH for commands
 [builtins.c](./builtins.c) | functions dealing with the shell builtins
+[set_env.c](./set_env.c) | functions dealing with the setenv/unsetenv builtins
 [helper_funcs.c](./helper_funcs.c) | memory and signal handling functions
 [convert_funcs.c](./convert_funcs.c) | conversion between string and number functions
 [man_1_simple_shell](./man_1_simple_shell) | Simple Shell man page (```man ./man_1_simple_shell```)
