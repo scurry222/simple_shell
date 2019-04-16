@@ -38,9 +38,9 @@ int exec(char **input, char *s, int *i, env_t **head)
 	if (child_pid == 0)
 	{
 		env = list_to_arr(*head);
-		if (get_env_val("PATH=")[0] != '/')
+		if (get_env_val("PATH=", env)[0] != '/')
 			execve(input[0], input, env);
-		exe = path_finder(input);
+		exe = path_finder(input, env);
 		if (!exe && input[0])
 		{
 			if (execve(input[0], input, env) == -1)
@@ -105,7 +105,7 @@ int main(int ac, char *av[])
 		exit(127);
 	}
 	signal(SIGINT, sigint_handler);
-	nodes = arr_to_list(&head);
+	nodes = arr_to_list(&head, environ);
 	if (!nodes)
 		printf("Impossible to create linked list\n");
 
@@ -125,9 +125,9 @@ int main(int ac, char *av[])
 		cmd_count++;
 		if (_strcmp(line, "\n") == 0)
 			continue;
-		line[get - 1] = '\0';
+		if (line[get - 1] == '\n')
+			line[get - 1] = '\0';
 		input = _strtok(line, ' ');
-//		free(line);
 		if (!input)
 			continue;
 		if (is_builtin(line, input, prog_name, &cmd_count, &head))

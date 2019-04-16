@@ -3,8 +3,8 @@
 /**
  * _setenv - sets an environment variable
  * @head: double pointer to the environ linked list
- * @name: name of the variable to set
- * @value: value of the variable to set
+ * @argv: name and value of the variable to set
+ * @args: number of arguments
  *
  * Return: 0 on success, -1 on failure
  */
