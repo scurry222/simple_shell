@@ -10,15 +10,12 @@
 * Return: string at value in env
 */
 
-char *get_env_val(char *name)
+char *get_env_val(char *name, char **env)
 {
-	char **env = NULL;
 	int i;
 
-	env = environ;
-
 	for (i = 0; env[i]; i++)
-		if (_strncmp(env[i], name, strlen(name)) == 0)
+		if (_strncmp(env[i], name, _strlen(name)) == 0)
 			return (env[i] + _strlen(name));
 	return (NULL);
 }
@@ -30,12 +27,10 @@ char *get_env_val(char *name)
 * Return: value at key
 */
 
-char **get_env(char *name)
+char **get_env(char *name, char **env)
 {
-	char **env = NULL, **value = NULL, **path = NULL;
+	char **value = NULL, **path = NULL;
 	int i;
-
-	env = environ;
 
 	for (i = 0; env[i]; i++)
 	{
@@ -68,14 +63,14 @@ char **get_env(char *name)
 * Return: concatenated string on success, NULL if failure
 */
 
-char *path_finder(char **s)
+char *path_finder(char **s, char **env)
 {
 	int i;
 	char *dir = NULL;
 	char *prog = NULL;
 	char **path_value = NULL;
 
-	path_value = get_env("PATH");
+	path_value = get_env("PATH", env);
 	if (!path_value)
 	{
 		free_everything(path_value);
