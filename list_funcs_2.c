@@ -6,13 +6,16 @@
  *
  * Return: Number of elements in the list
  */
-int arr_to_list(env_t **head)
+int arr_to_list(env_t **head, char **env)
 {
 	int i = 0;
+	
+	if (head)
+		free_list(head);
 
-	while (environ[i])
+	while (env[i])
 	{
-		add_node_end(head, environ[i]);
+		add_node_end(head, env[i]);
 		i++;
 	}
 	return (i);
