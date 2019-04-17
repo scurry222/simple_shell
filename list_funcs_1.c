@@ -16,7 +16,7 @@ env_t *add_node_end(env_t **head, const char *str)
 	if (!new)
 		return (NULL);
 
-	new->str = strdup(str);
+	new->str = _strdup(str);
 	new->next = NULL;
 
 	if (*head == NULL)
