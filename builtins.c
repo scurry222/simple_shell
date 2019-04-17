@@ -117,7 +117,7 @@ int env_handler(char **av, env_t **head)
  */
 int cd_handler(char **argv, env_t **head)
 {
-	char *home = NULL, *old = NULL, *current = NULL, **env = NULL;
+	char *home = NULL, *old = NULL, **env = NULL;
 
 	env = list_to_arr(*head);
 	if (!argv[1])
@@ -144,8 +144,7 @@ int cd_handler(char **argv, env_t **head)
 	}
 	else
 	{
-		current = get_env_val("PWD=", env);
-		change_pwd(current, env, head);
+		change_pwd(argv[1], env, head);
 		free_everything(env);
 		return (1);
 	}
