@@ -123,7 +123,7 @@ int cd_handler(char **argv, env_t **head)
 	env = list_to_arr(*head);
 	if (!argv[1])
 	{
-		home = get_env_val("HOME=", environ);
+		home = get_env_val("HOME=", env);
 		change_pwd(home, env, head);
 		chdir(home);
 		free_everything(env);
@@ -131,7 +131,7 @@ int cd_handler(char **argv, env_t **head)
 	}
 	if (_strcmp(argv[1], "-") == 0)
 	{
-		old = get_env_val("OLDPWD=", environ);
+		old = get_env_val("OLDPWD=", env);
 		_puts(old);
 		change_pwd(old, env, head);
 		chdir(old);
