@@ -38,7 +38,7 @@ long int _atoi(char *s)
 	}
 
 	if (f == 0)
-		return (-1);
+		return (0);
 
 	if (n > INT_MAX || n < 0)
 		return (-1);
