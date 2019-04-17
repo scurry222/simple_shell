@@ -46,8 +46,7 @@ int exec(char **input, char *s, int *i, env_t **head)
 			if (execve(input[0], input, env) == -1)
 			{
 				print_error(i, s, input);
-				free_everything(input);
-				free_everything(env);
+				free_everything(input), free_everything(env);
 				return (0);
 			}
 			free_everything(input);
@@ -56,16 +55,13 @@ int exec(char **input, char *s, int *i, env_t **head)
 		if (execve(exe, input, env) == -1)
 		{
 			print_error(i, s, input);
-			free(exe);
-			free_everything(input);
-			free_everything(env);
+			free(exe), free_everything(input), free_everything(env);
 			exit(EXIT_SUCCESS);
 		}
 	}
 	else
 		wait(&status);
-	free_everything(input);
-	free_everything(env);
+	free_everything(input), free_everything(env);
 	return (1);
 }
 
@@ -115,8 +111,7 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
-			free(line);
-			free_list(&head);
+			free(line), free_list(&head);
 			return (0);
 		}
 		cmd_count++;
@@ -133,8 +128,7 @@ int main(int ac, char *av[])
 		if (!exec(input, prog_name, &cmd_count, &head))
 			break;
 	}
-	free_list(&head);
-	free(line);
+	free_list(&head), free(line);
 	return (0);
 }
 
