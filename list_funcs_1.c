@@ -7,7 +7,7 @@
  *
  * Return: address of the new element, or NULL if it failed
  */
-env_t *add_node_end(env_t **head, const char *str)
+env_t *add_node_end(env_t **head, char *str)
 {
 	env_t *new = NULL;
 	env_t *temp = *head;

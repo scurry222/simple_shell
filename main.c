@@ -57,7 +57,7 @@ int exec(char **input, char *s, int *i, env_t **head)
 		{
 			print_error(i, s, input);
 			free(exe);
-			free_everything(input)
+			free_everything(input);
 			free_everything(env);
 			exit(EXIT_SUCCESS);
 		}
