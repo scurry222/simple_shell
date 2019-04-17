@@ -112,8 +112,7 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
-			free(line), free_list(&head);
-			return (0);
+			break;
 		}
 		cmd_count++;
 		if (_strcmp(line, "\n") == 0)
