@@ -132,8 +132,8 @@ int cd_handler(char **argv, env_t **head)
 	{
 		old = get_env_val("OLDPWD=", env);
 		_puts(old);
-		chdir(old);
 		change_pwd(old, env, head);
+		chdir(old);
 		free_everything(env);
 		return (1);
 	}
