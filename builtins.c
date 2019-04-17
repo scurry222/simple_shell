@@ -13,7 +13,7 @@
 int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 {
 	int n, l;
-	long long int m;
+	long int m;
 
 	if (!_strcmp(argv[0], "exit"))
 	{
@@ -61,10 +61,10 @@ int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
  * Return: 0 if there are no arguments,
  * -1 on failure, or the value of the argument
  */
-long long int exit_handler(char **tokens)
+long int exit_handler(char **tokens)
 {
 	int flag = 0, i;
-	long long int num = 0;
+	long int num = 0;
 
 	if (_strcmp(tokens[0], "exit") == 0)
 	{

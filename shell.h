@@ -70,14 +70,14 @@ void sigint_handler(int sig);
 
 /* builtins.c */
 int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head);
-long long int exit_handler(char **tokens);
+long int exit_handler(char **tokens);
 int env_handler(char **av, env_t **head);
 int cd_handler(char **argv, env_t **head);
 void change_pwd(char *path, char **env, env_t **head);
 
 /* convert.c */
 char *convert(int num, int base);
-long long int _atoi(char *s);
+long int _atoi(char *s);
 
 /* list_funcs_1.c */
 env_t *add_node_end(env_t **head, const char *str);

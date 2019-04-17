@@ -6,10 +6,10 @@
  *
  * Return: the int converted from the string
  */
-long long int _atoi(char *s)
+long int _atoi(char *s)
 {
 	int i, len, f, digit;
-	long long int n;
+	long int n;
 
 	i = 0;
 	n = 0;
