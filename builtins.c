@@ -117,34 +117,37 @@ int env_handler(char **av, env_t **head)
  */
 int cd_handler(char **argv, env_t **head)
 {
-	char *home = NULL, *old = NULL, **env = NULL;
+	char *home = NULL, *old = NULL, *current = NULL, **env = NULL;
+	int c;
 
 	env = list_to_arr(*head);
 	if (!argv[1])
 	{
-		home = get_env_val("HOME=", env);
-		chdir(home);
+		home = get_env_val("HOME=", environ);
 		change_pwd(home, env, head);
+		chdir(home);
 		free_everything(env);
 		return (1);
 	}
 	if (_strcmp(argv[1], "-") == 0)
 	{
-		old = get_env_val("OLDPWD=", env);
+		old = get_env_val("OLDPWD=", environ);
 		_puts(old);
 		change_pwd(old, env, head);
 		chdir(old);
 		free_everything(env);
 		return (1);
 	}
-	if (chdir(argv[1]) < 0)
+	c = chdir(argv[1]);
+	if (c < 0)
 	{
 		free_everything(env);
 		return (-1);
 	}
 	else
 	{
-		change_pwd(argv[1], env, head);
+		current = get_env_val("PWD=", environ);
+		change_pwd(current, env, head);
 		free_everything(env);
 		return (1);
 	}
