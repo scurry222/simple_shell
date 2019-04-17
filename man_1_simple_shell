@@ -66,6 +66,11 @@ without arguments, prints the environment variables.
 With [name], creates and exports an empty environment variable.
 With [name] and [value], creates and exports an environment variable and sets its value.
 .sp
+.B -cd [directory]
+changes the working directory.
+With no option, changes to the home directory.
+With '-', changes to the previous directory and prints the current one.
+This builtin changes the environment variables PWD and OLDPWD.
 .B - unsetenv [name]
 Deletes the environment variable [name].
 .RE
