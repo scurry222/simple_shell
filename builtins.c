@@ -118,7 +118,6 @@ int env_handler(char **av, env_t **head)
 int cd_handler(char **argv, env_t **head)
 {
 	char *home = NULL, *old = NULL, *current = NULL, **env = NULL;
-	int c;
 
 	env = list_to_arr(*head);
 	if (!argv[1])
@@ -138,15 +137,14 @@ int cd_handler(char **argv, env_t **head)
 		free_everything(env);
 		return (1);
 	}
-	c = chdir(argv[1]);
-	if (c < 0)
+	if (chdir(argv[1]) < 0)
 	{
 		free_everything(env);
 		return (-1);
 	}
 	else
 	{
-		current = get_env_val("PWD=", environ);
+		current = get_env_val("PWD=", env);
 		change_pwd(current, env, head);
 		free_everything(env);
 		return (1);
