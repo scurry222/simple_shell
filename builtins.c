@@ -131,7 +131,7 @@ int cd_handler(char **argv, env_t **head)
 	if (_strcmp(argv[1], "-") == 0)
 	{
 		old = get_env_val("OLDPWD=", env);
-		printf("%s\n", old);
+		_puts(old);
 		chdir(old);
 		change_pwd(old, env, head);
 		free_everything(env);
@@ -160,7 +160,7 @@ int cd_handler(char **argv, env_t **head)
 void change_pwd(char *path, char **env, env_t **head)
 {
 	char **old = NULL, **current = NULL;
-	int nodes, set;
+	int nodes = 0, set = 0;
 
 	old = malloc(sizeof(char *) * 4);
 	old[0] = _strdup("old");
@@ -178,7 +178,6 @@ void change_pwd(char *path, char **env, env_t **head)
 	set = _setenv(head, old, 2);
 	if (set < 0)
 	{
-		printf("setenv has failed!\n");
 		free_everything(old);
 		free_everything(current);
 		return;
@@ -187,7 +186,6 @@ void change_pwd(char *path, char **env, env_t **head)
 	set = _setenv(head, current, 2);
 	if (set < 0)
 	{
-		printf("setenv has failed!\n");
 		free_everything(current);
 		return;
 	}

@@ -56,7 +56,7 @@ char *convert(int num, int base)
 {
 	static char *rep = "0123456789";
 	static char buffer[50];
-	char *ptr;
+	char *ptr = NULL;
 
 	ptr = &buffer[49];
 	*ptr = '\0';
