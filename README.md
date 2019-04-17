@@ -73,6 +73,7 @@ File | Content
 [main.c](./main.c) | entry point, executing function
 [shell.h](./shell.h) | function prototypes, standard libraries, structs
 [print_funcs.c](./print_funcs.c) | printing functions
+[print_errors.c](./print_errors.c) | error printing functions
 [string_funcs_1.c](./string_funcs_1.c) | string-handling functions
 [string_funcs_2.c](./string_funcs_2.c) | string-handling functions
 [list_funcs_1.c](./list_funcs_1.c) | linked list handling functions
