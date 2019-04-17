@@ -123,8 +123,8 @@ int cd_handler(char **argv, env_t **head)
 	if (!argv[1])
 	{
 		home = get_env_val("HOME=", env);
-		change_pwd(home, env, head);
 		chdir(home);
+		change_pwd(home, env, head);
 		free_everything(env);
 		return (1);
 	}
