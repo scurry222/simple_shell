@@ -32,7 +32,7 @@ int exec(char **input, char *s, int *i, env_t **head)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		perror(s);
+		print_error(i, s, input);
 		free_everything(input);
 		exit(EXIT_SUCCESS);
 	}

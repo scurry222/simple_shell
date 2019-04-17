@@ -69,18 +69,18 @@ long int exit_handler(char **tokens)
 	if (_strcmp(tokens[0], "exit") == 0)
 	{
 		if (tokens[1] == NULL)
-			return (num);
+			return (-1);
 		for (i = 0; tokens[1][i]; i++)
 		{
 			if ((tokens[1][i] >= '0' && tokens[1][i] <= '9') || tokens[1][0] == '+')
 			{
 				flag = 1;
-				if (tokens[1][i + 1] < '0' || tokens[1][i + 1] > '9')
-					break;
 			}
 			else
+			{
+				flag = 0;
 				break;
-			flag = 0;
+			}
 		}
 		if (flag == 1)
 		{

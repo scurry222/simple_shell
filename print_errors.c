@@ -13,8 +13,6 @@ void print_error(int *i, char *s, char **argv)
 
 	number = convert(*i, 10);
 
-	if (errno == ENOENT || errno == ENOTDIR)
-	{
 		buf1 = str_concat(s, ": ");
 		buf2 = str_concat(buf1, number);
 		free(buf1);
@@ -26,9 +24,6 @@ void print_error(int *i, char *s, char **argv)
 		free(buf4);
 		write(2, buf5, _strlen(buf5));
 		free(buf5);
-	}
-	else
-		perror(s);
 }
 
 /**
