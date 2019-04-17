@@ -1,11 +1,15 @@
 #include "shell.h"
 
 /**
- * wordcount - counts words in a string for _strtok
+ * wordcount - counts tokens in a string for _strtok
  * @str: string to tokenize
  * @delim: delimeter between tokens
  *
- * Return: number of words
+ * Description: loop through string
+ * If the current character is a delim, turn flag off
+ * Else, turn flag on and increment the count
+ *
+ * Return: number of tokens
  */
 int wordcount(char *str, char delim)
 {
@@ -26,13 +30,26 @@ int wordcount(char *str, char delim)
 }
 
 /**
-* _strtok - converts a string into tokens
-* @str: string to separate
+* _strtok - converts a string into an array of tokens
+* @str: string to tokenize
 * @delim: delimeter between tokens
 *
-* Return: pointer to the array of strings, or NULL if fail
+* Description: if the string is NULL, return NULL
+* Set total to number of tokens in str
+* If total is 0, return NULL
+* Allocate memory for the array of strings, check if it failed
+* Loop through string and as loop as the increment is smaller than total
+* Store current position of str in cpy
+* Go pass the characters until the delim
+* Allocate memory for the previous token, check if it failed
+* Loop through cpy (copy of the token)
+* Store each character into the array of strings words
+* Terminate the string by a null byte
+* Continue
+* Set the last string of the array to NULL, return array
+* 
+* Return: pointer to the array of strings on success, or NULL on failure
 */
-
 char **_strtok(char *str, char delim)
 {
 	char *cpy = NULL, **words = NULL;

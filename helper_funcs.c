@@ -2,10 +2,10 @@
 
 /**
  * sigint_handler - doesn't exit in case of Ctrl-C
- * @sig: required for signal cmd to run properly
- *	print newline;
- *	print the prompt;
- *	wipe input stream(?);
+ * @sig: required for signal function to run properly
+ *
+ * Description: ignore sig, print newline, print the prompt
+ * Call to fflush discards the Ctrl-C
  */
 void sigint_handler(int sig)
 {
@@ -30,4 +30,22 @@ void free_everything(char **args)
 		free(args[i]);
 
 	free(args);
+}
+
+/**
+* parse_line - handle newline character if found, and parses the input line
+* @line: line read from stdin
+* @get: size of line returned from getline
+*
+* Return: parsed line
+*/
+char **parse_line(char *line, int get)
+{
+	char **input = NULL;
+
+	if (line[get - 1] == '\n')
+		line[get - 1] = '\0';
+	input = _strtok(line, ' ');
+
+	return (input);
 }

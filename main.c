@@ -7,20 +7,22 @@
 * @i: index of error
 * @head: linked list containing environment
 *
-* make child process
-* if fork failed, print error, free, and exit
-* if not failed,
-* if command can be run on its own without path,
-* execute command
-* set variable "exe" to resulting array of strings containing PATH value
-* if exe returned NULL but input is not NULL,
-* execute input. if failure, print error, free, and return error
-* else if exe did not return NULL,
-* execute input. if failure, print error, free all, exit error
-* if child process was nut successful, wait
-* free the input
+* Description: make child process
+* If forking failed, print error, free, and exit
+* If forking is successful,
+* Transform the environ linked list in an array, for execve
+* Check if the PATH has been modified
+* If command can be run on its own without PATH,
+* Execute command with execve
+* Set variable "exe" to resulting full command from path_finder
+* If exe returned NULL but the command is a local executable,
+* Execute input. If execve fails, print error, free, and return
+* Else if exe did not return NULL,
+* Execute exe. If execve failed, print error, free all, exit
+* In the meantime, make the parent process wait
+* Free the input and the environ array
 *
-* Return: return to main loop (1)
+* Return: return to main loop with 1 on success, or 0 on failure
 */
 int exec(char **input, char *s, int *i, env_t **head)
 {
@@ -73,21 +75,23 @@ int exec(char **input, char *s, int *i, env_t **head)
  * @ac: number of arguments
  * @av: array of arguments
  *
- * signal: handles ctrl+C
- * if this shell is running from a terminal, print prompt
- * read from stdin, modify variable "line" to line from stdin
- * if getline failed,
- * newline for terminal user(error message?)
- * quit out of shell with error return
- * increment count of how many calls to the shell were made
- * if just enter is pressed, restart shell loop
- * replace newline with null byte to remove it. possible mem leak?
- * break up inputted line into array of strings at space
- * check if first element a builtin
- * if call to exec failed
- * free input
+ * Description: If an argument is passed to main, print error, exit
+ * Call to signal to not exit on Ctrl+C
+ * Store the environ variable into a linked list
+ * Enter the "infinite" loop of the shell
+ * If this shell is running from a terminal, print prompt
+ * Read from standard input into variable "line"
+ * If getline failed, or if non-interactive mode
+ * Print a newline and break
+ * Increment count of calls to the shell
+ * If just enter is pressed, restart shell loop
+ * Call to parse_line: replace newline with null byte to remove it
+ * Break up input line into array of tokens
+ * Check if first token is a builtin
+ * If exec returns 0, break out of the loop
+ * Free input and linked list, return
  *
- * Return: default exit code (0).
+ * Return: always 0, for success
  */
 int main(int ac, char *av[])
 {
@@ -130,23 +134,4 @@ int main(int ac, char *av[])
 	}
 	free_list(&head), free(line);
 	return (0);
-}
-
-/**
-* parse_line - handle newline character if found, and call strtok
-* @line: line read from stdin
-* @get: size of line returned from getline
-*
-* Return: parsed line
-*/
-
-char **parse_line(char *line, int get)
-{
-	char **input = NULL;
-
-	if (line[get - 1] == '\n')
-		line[get - 1] = '\0';
-	input = _strtok(line, ' ');
-
-	return (input);
 }

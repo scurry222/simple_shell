@@ -30,7 +30,6 @@ typedef struct list_s
 
 /* main.c */
 int exec(char **input, char *s, int *i, env_t **head);
-char **parse_line(char *line, int get);
 
 /* path_finder.c */
 char **get_env(char *name, char **env);
@@ -67,6 +66,7 @@ char *_strcpy(char *dest, char *src);
 /* helper_funcs.c */
 void free_everything(char **args);
 void sigint_handler(int sig);
+char **parse_line(char *line, int get);
 
 /* builtins.c */
 int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head);

@@ -1,14 +1,15 @@
 #include "shell.h"
 
 /**
-* get_env_val - run commands if defined explicitly without PATH
+* get_env_val - gets the value of a environment variable
 * @name: env key to check
 * @env: array of strings containing environment copy
 *
-* loop through strings in env
-* if the name compares,
+* Description: loop through strings in env
+* If name compares with the name of the variable,
+* Return the rest of the string
 *
-* Return: string at value in env
+* Return: value of name in env
 */
 
 char *get_env_val(char *name, char **env)
@@ -22,13 +23,18 @@ char *get_env_val(char *name, char **env)
 }
 
 /**
-* get_env - access environment to get value at passed in name
+* get_env - transform the PATH string in an array of strings
 * @name: key (key=value) to select in env
 * @env: array of strings containing the environment copy
 *
-* Return: value at key
+* Description: loop through strings in env
+* Parse each one of them by the '=' delim
+* Compare the given key with name
+* If it compares, parse the result by ':'
+* Return array of strings
+*
+* Return: value at key, in the form of an array of strings
 */
-
 char **get_env(char *name, char **env)
 {
 	char **value = NULL, **path = NULL;
@@ -51,21 +57,21 @@ char **get_env(char *name, char **env)
 	return (NULL);
 }
 /**
-* path_finder - connect dirs in PATH with inputted command, check if executable
+* path_finder - connect directories in PATH with input command
+* to check if executable
 * @s: input, in form array of strings
 * @env: array of strings containing the environment copy
 *
-* call get_env to get value at PATH, save into path_value
-* if failure, free and return NULL
-* loop through strings in path_value
-* cat dir in PATH with command
-* if executable, free variables and return catted string to exec func
-* if not, free variables and go to next dir
-* if no dirs worked, return NULL
+* Description: call get_env to get value at PATH, save into path_value
+* If it failed, free and return NULL
+* Loop through strings in path_value
+* Concatenate the directory in PATH with a '/' and the command
+* If the result is executable, free variables and return result string
+* If not, free variables and go to the next directory in the path
+* If the command was not found in the PATH, return NULL
 *
-* Return: concatenated string on success, NULL if failure
+* Return: concatenated string on success, NULL on failure
 */
-
 char *path_finder(char **s, char **env)
 {
 	int i;
