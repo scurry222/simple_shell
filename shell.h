@@ -80,7 +80,7 @@ char *convert(int num, int base);
 long int _atoi(char *s);
 
 /* list_funcs_1.c */
-env_t *add_node_end(env_t **head, const char *str);
+env_t *add_node_end(env_t **head, char *str);
 int add_node_at_index(env_t **head, char *str, int index);
 int delete_node_at_index(env_t **head, unsigned int index);
 int find_index_list(env_t *head, char *name);
