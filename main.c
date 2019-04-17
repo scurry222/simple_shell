@@ -24,6 +24,7 @@
 */
 int exec(char **input, char *s, int *i, env_t **head)
 {
+	struct stat filestat;
 	int status = 0;
 	char *exe = NULL, **env = NULL;
 	pid_t child_pid;
@@ -41,7 +42,7 @@ int exec(char **input, char *s, int *i, env_t **head)
 		if (get_env_val("PATH=", env)[0] != '/')
 			execve(input[0], input, env);
 		exe = path_finder(input, env);
-		if (!exe && input[0])
+		if (!exe && !stat(input[0], &filestat))
 		{
 			if (execve(input[0], input, env) == -1)
 			{
