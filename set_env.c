@@ -10,8 +10,8 @@
  */
 int _setenv(env_t **head, char **argv, int args)
 {
-	char *buf1, *buf2;
-	int index;
+	char *buf1 = NULL, *buf2 = NULL;
+	int index = 0;
 
 	if (!head || !*head)
 		return (0);
@@ -79,7 +79,7 @@ int _unsetenv(env_t **head, char **argv)
  */
 void setenv_handler(char **argv, env_t **head)
 {
-	int n, m, args = 0;
+	int n = 0, m = 0, args = 0;
 	char *set_err = "setenv: Too many arguments.\n";
 	char *unset_err = "unsetenv: Too few arguments.\n";
 

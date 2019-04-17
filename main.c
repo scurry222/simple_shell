@@ -24,7 +24,7 @@
 */
 int exec(char **input, char *s, int *i, env_t **head)
 {
-	int status;
+	int status = 0;
 	char *exe = NULL, **env = NULL;
 	pid_t child_pid;
 
@@ -110,8 +110,9 @@ int main(int ac, char *av[])
 		{
 			if (isatty(STDIN_FILENO) != 0 && isatty(STDOUT_FILENO) != 0)
 				_putchar('\n');
-			free(line), free_list(&head);
-			return (1);
+			free(line);
+			free_list(&head);
+			return (0);
 		}
 		cmd_count++;
 		if (_strcmp(line, "\n") == 0)
@@ -127,7 +128,8 @@ int main(int ac, char *av[])
 		if (!exec(input, prog_name, &cmd_count, &head))
 			break;
 	}
-	free_list(&head), free(line);
+	free_list(&head);
+	free(line);
 	return (0);
 }
 

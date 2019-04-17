@@ -8,8 +8,10 @@
  */
 void print_error(int *i, char *s, char **argv)
 {
-	char *buf1, *buf2, *buf3, *buf4, *buf5;
-	char *number = convert(*i, 10);
+	char *buf1 = NULL, *buf2 = NULL, *buf3 = NULL, *buf4 = NULL, *buf5 = NULL;
+	char *number = NULL;
+
+	number = convert(*i, 10);
 
 	if (errno == ENOENT || errno == ENOTDIR)
 	{
@@ -35,7 +37,7 @@ void print_error(int *i, char *s, char **argv)
  */
 void print_error_env(char **argv)
 {
-	char *buf1, *buf2, *buf3;
+	char *buf1 = NULL, *buf2 = NULL, *buf3 = NULL;
 
 	buf1 = str_concat(argv[0], ": ");
 	buf2 = str_concat(buf1, argv[1]);
@@ -54,8 +56,11 @@ void print_error_env(char **argv)
  */
 void print_error_exit(int *i, char *s, char **argv)
 {
-	char *buf1, *buf2, *buf3, *buf4, *buf5, *buf6, *buf7;
-	char *number = convert(*i, 10);
+	char *buf1 = NULL, *buf2 = NULL, *buf3 = NULL;
+	char *buf4 = NULL, *buf5 = NULL, *buf6 = NULL, *buf7 = NULL;
+	char *number = NULL;
+
+	number = convert(*i, 10);
 
 	buf1 = str_concat(s, ": ");
 
@@ -81,7 +86,7 @@ void print_error_exit(int *i, char *s, char **argv)
  */
 void print_error_main(char **av)
 {
-	char *buf1, *buf2, *buf3;
+	char *buf1 = NULL, *buf2 = NULL, *buf3 = NULL;
 
 	buf1 = str_concat(av[0], ": 0: Can't open ");
 	buf2 = str_concat(buf1, av[1]);
@@ -100,8 +105,11 @@ void print_error_main(char **av)
  */
 void print_error_cd(int *i, char *s, char **argv)
 {
-	char *buf1, *buf2, *buf3, *buf4, *buf5, *buf6;
-	char *number = convert(*i, 10);
+	char *buf1 = NULL, *buf2 = NULL, *buf3 = NULL, *buf4 = NULL;
+	char *buf5 = NULL, *buf6 = NULL;
+	char *number = NULL;
+
+	number = convert(*i, 10);
 
 	buf1 = str_concat(s, ": ");
 	buf2 = str_concat(buf1, number);

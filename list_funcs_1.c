@@ -9,7 +9,7 @@
  */
 env_t *add_node_end(env_t **head, const char *str)
 {
-	env_t *new;
+	env_t *new = NULL;
 	env_t *temp = *head;
 
 	new = malloc(sizeof(env_t));
@@ -84,7 +84,7 @@ int delete_node_at_index(env_t **head, unsigned int index)
 int add_node_at_index(env_t **head, char *str, int idx)
 {
 	int i;
-	env_t *new;
+	env_t *new = NULL;
 	env_t *temp = *head;
 
 	new = malloc(sizeof(env_t));
@@ -126,11 +126,11 @@ int add_node_at_index(env_t **head, char *str, int idx)
 int find_index_list(env_t *head, char *name)
 {
 	int index = 0;
-	int c;
+	int c = 0;
 
 	while (head)
 	{
-		c = strncmp(head->str, name, strlen(name));
+		c = _strncmp(head->str, name, _strlen(name));
 		if (c == 0)
 			return (index);
 		index++;

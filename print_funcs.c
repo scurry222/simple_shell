@@ -20,7 +20,7 @@ void print_prompt(void)
 {
 	char *s = "$ ";
 
-	write(2, s, 2);
+	write(1, s, 2);
 }
 
 /**

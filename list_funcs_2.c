@@ -31,8 +31,8 @@ int arr_to_list(env_t **head, char **env)
 char **list_to_arr(env_t *head)
 {
 	env_t *temp = head;
-	char **arr, *s;
-	size_t size;
+	char **arr = NULL, *s = NULL;
+	size_t size = 0;
 	int i;
 
 	size = list_len(head);
@@ -89,7 +89,7 @@ size_t print_list(env_t *h)
  */
 void free_list(env_t **head)
 {
-	env_t *temp;
+	env_t *temp = NULL;
 
 	if (head == NULL)
 		return;
