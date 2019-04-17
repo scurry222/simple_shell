@@ -3,6 +3,7 @@
 /**
  * arr_to_list - transforms the environ variable into a linked list
  * @head: double pointer to the env_t list to fill
+ * @env: array of strings containing the environment variables
  *
  * Return: Number of elements in the list
  */

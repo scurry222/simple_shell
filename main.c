@@ -120,10 +120,12 @@ int main(int ac, char *av[])
 		if (!input)
 			continue;
 		if (is_builtin(line, input, prog_name, &cmd_count, &head))
-			free_everything(input), continue;
+		{
+			free_everything(input);
+			continue;
+		}
 		if (!exec(input, prog_name, &cmd_count, &head))
 			break;
-		continue;
 	}
 	free_list(&head), free(line);
 	return (0);
