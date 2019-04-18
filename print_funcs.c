@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _putchar - writes the character c to stdout
+ * _putchar - writes the character c to standard output
  * @c: The character to print
  *
  * Return: On success 1.
@@ -24,7 +24,7 @@ void print_prompt(void)
 }
 
 /**
- * _puts - prints a string to stdout
+ * _puts - prints a string to standard output
  * @str: pointer to the string to print
  */
 void _puts(char *str)
@@ -32,8 +32,6 @@ void _puts(char *str)
 	int i;
 
 	for (i = 0; str[i] != '\0'; i++)
-	{
 		_putchar(str[i]);
-	}
 	_putchar('\n');
 }

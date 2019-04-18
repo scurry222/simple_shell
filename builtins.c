@@ -8,7 +8,29 @@
  * @i: pointer to the increment variable of main
  * @head: double pointer to the environ linked list
  *
- * Return: 1 if yes, 0 if no
+ * Description: Intermediate step, compares input with the builtin
+ * commands to pass it into the correct function.
+ * If the first argument compares with exit,
+ * Call the exit handler function
+ * If the exit handler function failed,
+ * Call the error on exit function
+ * If exit handler did not fail,
+ * Free all variables and return the exit status and return 1 to main
+ * If the first argument compares with env,
+ * Call the env handler function
+ * If the env handler function failed,
+ * Call the print_error_exit function, and return 1 to main
+ * If the first argument compares with setenv or unsetenv,
+ * Call the setenv_hander function (another intermediate step)
+ * And return 1
+ * If the first argument compares with cd,
+ * Call the cd handler function
+ * If the cd handler function failed,
+ * Call the print_error_cd function
+ * Manually write a newline and return 1 to main
+ * If none of the builtins compared,
+ *
+ * Return: 0 to main
  */
 int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 {
@@ -58,6 +80,21 @@ int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
  * exit_handler - handles the builtin exit with arguments
  * @tokens: array of strings from the command line
  *
+ * Description: If there is no second token,
+ * Return num (which is 0)
+ * Since the function continued, there is an argument, and loop through it
+ * Check if characters in argument compare with numbers
+ * If they compare,
+ * Turn a flag on, and check the next character
+ * If it isnt a number,
+ * Break out of the loop
+ * If the character is not a number,
+ * Break out of the loop
+ * Regardless, turn flag off
+ * If the flag still equals 1,
+ * save the argument into an integer with atoi,
+ * and return the number
+ *
  * Return: 0 if there are no arguments,
  * -1 on failure, or the value of the argument
  */
@@ -66,8 +103,8 @@ long int exit_handler(char **tokens)
 	int flag = 0, i;
 	long int num = 0;
 
-	if (_strcmp(tokens[0], "exit") == 0)
-	{
+//	if (_strcmp(tokens[0], "exit") == 0)
+//	{
 		if (tokens[1] == NULL)
 			return (num);
 		for (i = 0; tokens[1][i]; i++)
@@ -87,7 +124,7 @@ long int exit_handler(char **tokens)
 			num = _atoi(tokens[1]);
 			return (num);
 		}
-	}
+//	}
 	return (-1);
 }
 
@@ -113,7 +150,30 @@ int env_handler(char **av, env_t **head)
  * @argv: array of arguments from the command line
  * @head: double pointer to the env_t linked list
  *
- * Return: 1 on success, -1 on error
+ * Description: Transform linked list into an array with
+ * list_to_arr function
+ * If there is no second argument,
+ * Get value at HOME from environment
+ * Change directory to the home value
+ * Call change_pwd function on "home" value
+ * Free the environment array of strings
+ * Return 1 to is_builtin function
+ * If there is a second argument and it's a '-' sign,
+ * Set variable to value at OLDPWD in environment
+ * Print that variable
+ * Call change_pwd function on "oldpwd" value
+ * Change directory to the oldpwd value
+ * Free environment array of strings,
+ * And return 1 to is_builtin function
+ * If changing directory failed,
+ * Free environment array of strings,
+ * And return -1 to is_builtin function
+ * If changing directory did not fail,
+ * Call change_pwd function on argument 1
+ * Then free the environment array of strings,
+ * And return 1 to is_builtin function
+ *
+ * Return: 0 if none of the other cases succeeded
  */
 int cd_handler(char **argv, env_t **head)
 {
@@ -156,6 +216,20 @@ int cd_handler(char **argv, env_t **head)
  * @path: path of the working directories we want to change to
  * @head: double pointer to the env_t linked list
  * @env: double array containing the environment
+ *
+ * Description: Allocate new array of strings to hold old pwd
+ * First element in string array: unused
+ * Add name, value, and NULL to string array
+ * Allocate new array of strings to hold current pwd
+ * First element in string array: unused
+ * Add name, value, and NULL to string array
+ * Change array back into a linked list
+ * If the transformation failed,
+ * Return out of function
+ * Call setenv on "old" variable
+ * if setenv failed,
+ * Free all variables and return out of function
+ * Free the remaining current variable
  */
 void change_pwd(char *path, char **env, env_t **head)
 {

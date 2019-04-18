@@ -5,6 +5,10 @@
  * @i: index of the command in history
  * @s: name of the program
  * @argv: array of arguments from the command line
+ *
+ * Description: Concatenate strings to format the error message
+ * Free previous concatenation at every new string
+ * When the string is completed, write message to standard error
  */
 void print_error(int *i, char *s, char **argv)
 {
@@ -13,22 +17,25 @@ void print_error(int *i, char *s, char **argv)
 
 	number = convert(*i, 10);
 
-		buf1 = str_concat(s, ": ");
-		buf2 = str_concat(buf1, number);
-		free(buf1);
-		buf3 = str_concat(buf2, ": ");
-		free(buf2);
-		buf4 = str_concat(buf3, argv[0]);
-		free(buf3);
-		buf5 = str_concat(buf4, ": not found\n");
-		free(buf4);
-		write(2, buf5, _strlen(buf5));
-		free(buf5);
+	buf1 = str_concat(s, ": ");
+	buf2 = str_concat(buf1, number);
+	free(buf1);
+	buf3 = str_concat(buf2, ": ");
+	free(buf2);
+	buf4 = str_concat(buf3, argv[0]);
+	free(buf3);
+	buf5 = str_concat(buf4, ": not found\n");
+	free(buf4);
+	write(2, buf5, _strlen(buf5));
+	free(buf5);
 }
 
 /**
  * print_error_env - prints a custom error message for env builtin
  * @argv: array of arguments from the command line
+ * Description: Concatenate strings to format the error message
+ * Free previous concatenation at every new string
+ * When the string is completed, write message to standard error
  */
 void print_error_env(char **argv)
 {
@@ -48,6 +55,9 @@ void print_error_env(char **argv)
  * @i: index of the command in history
  * @s: name of the program
  * @argv: array of arguments from the command line
+ * Description: Concatenate strings to format the error message
+ * Free previous concatenation at every new string
+ * When the string is completed, write message to standard error
  */
 void print_error_exit(int *i, char *s, char **argv)
 {
@@ -78,6 +88,9 @@ void print_error_exit(int *i, char *s, char **argv)
 /**
  * print_error_main - prints a custom error message for main
  * @av: array of arguments passed to main
+ * Description: Concatenate strings to format the error message
+ * Free previous concatenation at every new string
+ * When the string is completed, write message to standard error
  */
 void print_error_main(char **av)
 {
@@ -97,6 +110,9 @@ void print_error_main(char **av)
  * @i: index of the command in history
  * @s: name of the program
  * @argv: array of arguments from the command line
+ * Description: Concatenate strings to format the error message
+ * Free previous concatenation at every new string
+ * When the string is completed, write message to standard error
  */
 void print_error_cd(int *i, char *s, char **argv)
 {
