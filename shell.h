@@ -32,7 +32,6 @@ typedef struct list_s
 int exec(char **input, char *s, int *i, env_t **head);
 
 /* path_finder.c */
-char *strtok_path(char *path, char delim);
 char **get_env(char *name, char **env);
 char *path_finder(char **s, char **env);
 char *get_env_val(char *name, char **env);
