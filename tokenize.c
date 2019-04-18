@@ -47,7 +47,7 @@ int wordcount(char *str, char delim)
 * Terminate the string by a null byte
 * Continue
 * Set the last string of the array to NULL, return array
-* 
+*
 * Return: pointer to the array of strings on success, or NULL on failure
 */
 char **_strtok(char *str, char delim)

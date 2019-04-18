@@ -103,8 +103,8 @@ long int exit_handler(char **tokens)
 	int flag = 0, i;
 	long int num = 0;
 
-//	if (_strcmp(tokens[0], "exit") == 0)
-//	{
+	if (_strcmp(tokens[0], "exit") == 0)
+	{
 		if (tokens[1] == NULL)
 			return (num);
 		for (i = 0; tokens[1][i]; i++)
@@ -124,7 +124,7 @@ long int exit_handler(char **tokens)
 			num = _atoi(tokens[1]);
 			return (num);
 		}
-//	}
+	}
 	return (-1);
 }
 
@@ -221,7 +221,7 @@ int cd_handler(char **argv, env_t **head)
  * First element in string array: unused
  * Add name, value, and NULL to string array
  * Allocate new array of strings to hold current pwd
- * First element in string array: unused
+ * First part of string array: unused
  * Add name, value, and NULL to string array
  * Change array back into a linked list
  * If the transformation failed,

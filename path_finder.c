@@ -28,10 +28,10 @@ char *get_env_val(char *name, char **env)
 * @env: array of strings containing the environment copy
 *
 * Description: loop through strings in env
-* Parse each one of them by the '=' delim
-* Compare the given key with name
+* Parse each env string by the '=' delim
+* Compare the given key with name (env[0])
 * If it compares, parse the result by ':'
-* Return array of strings
+* Return resulting array of strings
 *
 * Return: value at key, in the form of an array of strings
 */
