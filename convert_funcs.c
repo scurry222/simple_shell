@@ -4,6 +4,18 @@
  * _atoi - converts a string to an integer
  * @s: string to be converted
  *
+ * Description: if the first character is a '+',
+ * Go to next character
+ * Loop through the string while the flag is 0
+ * If the first character is '-'
+ * Return -1 because we don't want negative values
+ * If the current character is a digit, convert it into a digit
+ * Store it into the integer
+ * If the next character is a letter, breakout of the loop
+ * If the result number is superior to INT_MAX or is negative
+ * Return -1 for error
+ * Else return the number
+ *
  * Return: the int converted from the string
  */
 long int _atoi(char *s)
@@ -50,6 +62,13 @@ long int _atoi(char *s)
  * convert - converts number and base into string
  * @num: input number
  * @base: input base
+ *
+ * Description: Create a static buffer of 50 chars
+ * And a static string of digits
+ * Go from the end of the buffer and loop until num reaches 0
+ * Current number is the member of rep at index num % base
+ * Divide num by base
+ *
  * Return: result string
  */
 char *convert(int num, int base)

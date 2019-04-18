@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
-* _strdup - make new place in memory for a string
+* _strdup - allocate memory for a string to duplicate
 * @str: string to duplicate
 *
-* Return: New string on success, null if memory allocation failed
+* Return: new string on success, NULL on failure
 */
 
 char *_strdup(char *str)
@@ -32,11 +32,12 @@ char *_strdup(char *str)
 }
 
 /**
- * *str_concat - concatenates two strings
+ * str_concat - concatenates two strings,
+ * and allocate memory for the result string
  * @s1: string to concatenate
  * @s2: other string to concatenate
  *
- * Return: pointer to the new string created (Success), or NULL (Error)
+ * Return: pointer to the string created on success, or NULL on failure
  */
 char *str_concat(char *s1, char *s2)
 {
@@ -104,7 +105,7 @@ int _strcmp(char *s1, char *s2)
 * @s2: string to compare from
 * @n: number of bytes to compare
 *
-* Return: differences between strings
+* Return: 0 if the strings are different, non-zero if they are the same
 */
 int _strncmp(char *s1, char *s2, unsigned int n)
 {
