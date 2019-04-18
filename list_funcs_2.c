@@ -5,7 +5,10 @@
  * @head: double pointer to the env_t list to fill
  * @env: array of strings containing the environment variables
  *
- * Return: Number of elements in the list
+ * Description: Free the list if it exists
+ * Loop through the array and add a node for each string
+ *
+ * Return: Number of nodes in the list
  */
 int arr_to_list(env_t **head, char **env)
 {
@@ -25,6 +28,13 @@ int arr_to_list(env_t **head, char **env)
 /**
  * list_to_arr - transforms a linked list in an array of strings
  * @head: pointer to the env_t list
+ *
+ * Description: If the list doesn't exist, return NULL
+ * Allocate memory for the array, check if it failed
+ * Traverse the list, allocate memory for each string
+ * Fill each string with the string from the node
+ * Set last element of the array to NULL
+ * Return the array
  *
  * Return: address of the array, or NULL if it failed
  */
@@ -61,7 +71,7 @@ char **list_to_arr(env_t *head)
 }
 
 /**
- * print_list - prints all the elements of a linked list
+ * print_list - prints all the nodes of a linked list
  * @h: pointer to the list_t list to print
  *
  * Return: the number of nodes printed
@@ -84,7 +94,7 @@ size_t print_list(env_t *h)
 }
 
 /**
- * free_list - frees a linked list
+ * free_list - frees all the nodes of a linked list
  * @head: list_t list to be freed
  */
 void free_list(env_t **head)
