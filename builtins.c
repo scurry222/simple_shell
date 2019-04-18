@@ -60,7 +60,7 @@ int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head)
 	}
 	if (!_strcmp(argv[0], "setenv") || !_strcmp(argv[0], "unsetenv"))
 	{
-		setenv_handler(argv, head);
+		setenv_handler(argv, head, i, prog_name);
 		return (1);
 	}
 	if (!_strcmp(argv[0], "cd"))

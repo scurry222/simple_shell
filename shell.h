@@ -95,6 +95,7 @@ char **list_to_arr(env_t *head);
 /* set_env.c */
 int _unsetenv(env_t **head, char **argv);
 int _setenv(env_t **head, char **argv, int args);
-void setenv_handler(char **argv, env_t **head);
+void setenv_handler(char **argv, env_t **head, int *i, char *prog_name);
+void print_error_setenv(int *i, char *s, char **argv);
 
 #endif
