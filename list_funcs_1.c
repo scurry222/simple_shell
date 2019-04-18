@@ -2,8 +2,14 @@
 
 /**
  * add_node_end - adds a new node at the end of a linked list
- * @head: double pointer to the list_t list
+ * @head: double pointer to the env_t list
  * @str: string to put in the new node
+ *
+ * Description: allocate memory for a node, and check if it failed
+ * Copy str into the node, set next node to NULL
+ * If list is empty, set head to new node and return it
+ * Traverse the list
+ * Set the next element in the list to new, return it
  *
  * Return: address of the new element, or NULL if it failed
  */
@@ -37,6 +43,12 @@ env_t *add_node_end(env_t **head, char *str)
  * delete_node_at_index - deletes a node in a linked list at a certain index
  * @head: pointer to the first element in the list
  * @index: index of the node to delete
+ *
+ * Description: If the list is empty, return NULL
+ * If we want to delete the first node,
+ * Set the head to point to the next, and free the node
+ * Traverse the list, at the end set the current node to
+ * point to two nodes after it, free the next node and free its string
  *
  * Return: 1 (Success), or -1 (Fail)
  */
@@ -79,6 +91,10 @@ int delete_node_at_index(env_t **head, unsigned int index)
  * @str: string to put in the new node
  * @idx: index where to insert the node
  *
+ * Description: Allocate memory for a new node, check if it failed
+ * If we want to add the node at the beginning, add it
+ * Else traverse the list until the index, and add the new node
+ *
  * Return: 0 on success, -1 on failure
  */
 int add_node_at_index(env_t **head, char *str, int idx)
@@ -120,6 +136,10 @@ int add_node_at_index(env_t **head, char *str, int idx)
  * find_index_list - finds the index of a given element in a list
  * @head: pointer to the env_t list
  * @name: string of the node to find
+ *
+ * Description: Traverse the list,
+ * For each node, compare its string with name
+ * If it matches, return the index of teh node
  *
  * Return: index of the node, or 0 if the node is not found
  */

@@ -1,10 +1,21 @@
 #include "shell.h"
 
 /**
- * _setenv - sets an environment variable
+ * _setenv - sets an environment variable,
+ * handles the setenv builtin
  * @head: double pointer to the environ linked list
  * @argv: name and value of the variable to set
  * @args: number of arguments
+ *
+ * Description: If the list is empty, return NULL
+ * If no arguments is passed to setenv,
+ * print the list
+ * If too many arguments are passed, return -1
+ * Concatenate the first argument with an '='
+ * and the second argument
+ * Find the index of the name we're looking for
+ * If not found, add the variable at the end
+ * Else delete the node at the index, and add the new string
  *
  * Return: 0 on success, -1 on failure
  */
@@ -49,9 +60,13 @@ int _setenv(env_t **head, char **argv, int args)
 }
 
 /**
- * _unsetenv - unsets an environment variable
+ * _unsetenv - unsets an environment variable,
+ * handles the unsetenv builtin
  * @head: double pointer to the environ linked list
  * @argv: array of strings, includes parsed line
+ *
+ * Description: If no arguments is passed, return -1
+ * Find the index of the variable, delete it
  *
  * Return: 0 on success, -1 on failure
  */
@@ -76,6 +91,10 @@ int _unsetenv(env_t **head, char **argv)
  * setenv_handler - handles the setenv and unsetenv builtins
  * @argv: array of arguments from the command line
  * @head: pointer to the env_t linked list
+ *
+ * Description: Count the umber of arguments
+ * If setenv, call _setenv, print error on failure
+ * If unsetenv, call _unsetenv, print error on failure
  */
 void setenv_handler(char **argv, env_t **head)
 {
