@@ -15,7 +15,8 @@
 
 ## Description
 This team project is part of the first year curriculum of Holberton School.
-Simple Shell is a command line interpreter that replicates the **sh** program.
+Simple Shell is a command line interpreter that replicates the **sh** program on Linux.
+It can take in simple commands to navigate the terminal, manipulate files, and execute programs.
 
 What we learned:
 * How a shell works and finds commands
@@ -88,5 +89,12 @@ File | Content
 
 ## Authors
 
-* **Laura Roudge** - [laura.derohan@gmail.com](https://github.com/lroudge)
-* **Scout Curry** - [scurry222@gmail.com](https://github.com/scurry222)
+* **Laura Roudge** - [Github](https://github.com/lroudge) - [Twitter](https://twitter.com/LRoudge) - [LinkedIn](https://www.linkedin.com/in/lauraroudge/)
+
+I am a Full-Stack Software Engineer, and I finished the foundations year at Holberton School in San Francisco, where I was also a Teaching Assistant. I currently live in Paris, France, but I am always open to opportunities to travel abroad.
+
+I am most proficient in Python and Javascript, and am curious about learning more Node.js, and Javascript frameworks like Vue.js as I move forward.
+
+I am mission-driven and always excited about helping others, which is why I took a Teaching Assistant role at Holberton School. I value inclusivity, equality and kindness more than anything else.
+
+* **Scout Curry** - [Github](https://github.com/scurry222) - [Twitter](https://twitter.com/ScoutCurry) - [LinkedIn](https://www.linkedin.com/in/scout-curry-96356217a/)
